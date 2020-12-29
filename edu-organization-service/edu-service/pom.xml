@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>edu-organization-service</artifactId>
+        <groupId>com.education</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>edu-service</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>edu-service-msm</module>
+        <module>edu-service-usercenter</module>
+        <module>edu-service-course</module>
+        <module>edu-service-bind</module>
+        <module>edu-service-organization</module>
+        <module>edu-service-course-order</module>
+        <module>edu-service-student</module>
+    </modules>
+
+    <dependencies>
+        <!--引入自定义的api通用包-->
+        <dependency>
+            <groupId>com.education</groupId>
+            <artifactId>edu-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--spring boot web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- commons-pool2 缓存连接池 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>2.2.6.RELEASE</version>
+        </dependency>
+        <!-- log4j-over-slf4j 替换掉log4j，统一使用slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+
+
+
+
+    </dependencies>
+
+</project>

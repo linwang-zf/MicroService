@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.OrganizationsDao">
+
+    <resultMap type="com.oes.model.entity.Organization" id="OrganizationsMap">
+        <result property="orgId" column="org_id" jdbcType="OTHER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="categoryId" column="categoryId" jdbcType="OTHER"/>
+        <result property="legalPerson" column="legal_person" jdbcType="VARCHAR"/>
+        <result property="creditCode" column="credit_code" jdbcType="VARCHAR"/>
+        <result property="estabDate" column="estab_date" jdbcType="TIMESTAMP"/>
+        <result property="annulSalesVolume" column="annul_sales_volume" jdbcType="OTHER"/>
+        <result property="staffScale" column="staff_scale" jdbcType="OTHER"/>
+        <result property="recruitScale" column="recruit_scale" jdbcType="OTHER"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="district" column="district" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="longitude" column="longitude" jdbcType="OTHER"/>
+        <result property="latitude" column="latitude" jdbcType="OTHER"/>
+        <result property="licenseNumber" column="license_number" jdbcType="VARCHAR"/>
+        <result property="licensePhoto" column="license_photo" jdbcType="OTHER"/>
+        <result property="bankAccountPhoto" column="bank_account_photo" jdbcType="OTHER"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR"/>
+        <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
+        <result property="qualificationNumber" column="qualification_number" jdbcType="VARCHAR"/>
+        <result property="qualificationPhoto" column="qualification_photo" jdbcType="OTHER"/>
+        <result property="adverPhoto" column="adver_photo" jdbcType="OTHER"/>
+        <result property="photoNumber" column="photo_number" jdbcType="OTHER"/>
+        <result property="courseCategoryNumber" column="course_category_number" jdbcType="OTHER"/>
+        <result property="registerState" column="register_state" jdbcType="OTHER"
+                javaType="com.oes.model.enums.RegistState" typeHandler="com.oes.handlers.RegistStateHandler"/>
+        <result property="fail_reason" column="fail_reason" jdbcType="VARCHAR"/>
+        <result property="qrcode" column="qrcode" jdbcType="OTHER"/>
+    </resultMap>
+
+    <resultMap id="OrganizationTeacherMap" type="com.oes.model.dto.OrganizationTeacherDTO">
+        <result property="value" column="org_id"/>
+        <result property="label" column="name"/>
+        <collection property="children" ofType="com.oes.model.entity.AuthenticatedUser">
+            <result column="teacher_id" property="userid"/>
+            <result column="teacher_name" property="name"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+    <sql id="Base_Column_List">
+    org_id, name, category, legal_person, credit_code, estab_date, annul_sales_volume,
+    staff_scale, recruit_scale, province, city, district, address, longitude, latitude,
+    license_number, license_photo, bank_account_photo, contact_name, contact_phone, introduction,
+    qualification_number, qualification_photo, adver_photo, photo_number, course_category_number,
+    register_state, fail_reason, qrcode
+  </sql>
+
+    <select id="selectByExample" parameterType="com.oes.model.example.OrganizationExample" resultMap="OrganizationsMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from organizations
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+    <select id="countByExample" parameterType="com.oes.model.example.OrganizationExample" resultType="java.lang.Long">
+    select count(*) from organizations
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrganizationsMap">
+        select
+            *
+        from organizations
+        where org_id = #{orgId}
+    </select>
+
+    <select id="queryByName" resultMap="OrganizationsMap">
+        select
+            *
+        from organizations
+        where name = #{name}
+    </select>
+
+    <select id="queryByKeyword" resultMap="OrganizationsMap">
+        select
+            *
+        from organizations
+        where name like CONCAT('%', #{keyWord}, '%') and register_state = 1
+    </select>
+
+    <select id="queryByLegalPerson" resultMap="OrganizationsMap">
+        select
+            *
+        from organizations
+        where legal_person = #{name}
+    </select>
+
+    <select id="queryByState" resultMap="OrganizationsMap">
+        select
+            *
+        from organizations
+        where register_state = #{state}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OrganizationsMap">
+        select
+            *
+        from organizations
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryByEntity" resultMap="OrganizationsMap">
+        select
+        *
+        from organizations
+        <where>
+            <if test="orgId != null and orgId != 0">
+                and org_id = #{orgId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="categoryId != null and categoryId != 0">
+                and categoryId = #{categoryId}
+            </if>
+            <if test="legalPerson != null and legalPerson != ''">
+                and legal_person = #{legalPerson}
+            </if>
+            <if test="creditCode != null and creditCode != ''">
+                and credit_code = #{creditCode}
+            </if>
+            <if test="estabDate != null">
+                and estab_date = #{estabDate}
+            </if>
+            <if test="annulSalesVolume != null">
+                and annul_sales_volume = #{annulSalesVolume}
+            </if>
+            <if test="staffScale != 0">
+                and staff_scale = #{staffScale}
+            </if>
+            <if test="recruitScale != 0">
+                and recruit_scale = #{recruitScale}
+            </if>
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="district != null and district != ''">
+                and district = #{district}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="longitude != null and longitude != 0">
+                and longitude = #{longitude}
+            </if>
+            <if test="latitude != null and latitude != 0">
+                and latitude = #{latitude}
+            </if>
+            <if test="licenseNumber != null and licenseNumber != ''">
+                and license_number = #{licenseNumber}
+            </if>
+            <if test="licensePhoto != null and licensePhoto != 0">
+                and license_photo = #{licensePhoto}
+            </if>
+            <if test="bankAccountPhoto != null and bankAccountPhoto != 0">
+                and bank_account_photo = #{bankAccountPhoto}
+            </if>
+            <if test="contactName != null and contactName != ''">
+                and contact_name = #{contactName}
+            </if>
+            <if test="contactPhone != null and contactPhone != ''">
+                and contact_phone = #{contactPhone}
+            </if>
+            <if test="introduction != null and introduction != ''">
+                and introduction = #{introduction}
+            </if>
+            <if test="qualificationNumber != null and qualificationNumber != ''">
+                and qualification_number = #{qualificationNumber}
+            </if>
+            <if test="qualificationPhoto != null and qualificationPhoto != 0">
+                and qualification_photo = #{qualificationPhoto}
+            </if>
+            <if test="adverPhoto != null and adverPhoto != 0">
+                and adver_photo = #{adverPhoto}
+            </if>
+            <if test="photoNumber != 0">
+                and photo_number = #{photoNumber}
+            </if>
+            <if test="courseCategoryNumber != 0">
+                and course_category_number = #{courseCategoryNumber}
+            </if>
+            <if test="registerState != 0">
+                and register_state = #{registerState}
+            </if>
+            <if test="fail_reason != null">
+                and fail_reason = #{fail_reason}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAll" resultMap="OrganizationsMap">
+        select
+            *
+        from organizations
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orgId" useGeneratedKeys="true">
+        insert into
+        organizations(name,
+        <if test="categoryId != 0">
+            category,
+        </if>
+        legal_person, credit_code, estab_date, annul_sales_volume, staff_scale, recruit_scale, province, city, district,
+        address, longitude, latitude, license_number,
+        <if test="licensePhoto != 0">
+            license_photo,
+        </if>
+        <if test="bankAccountPhoto != 0">
+            bank_account_photo,
+        </if>
+        contact_name, contact_phone, introduction, qualification_number,
+        <if test="qualificationPhoto != 0">
+            qualification_photo,
+        </if>
+        <if test="adverPhoto != 0">
+            adver_photo,
+        </if>
+        photo_number, course_category_number, register_state,fail_reason
+        <if test="qrcode != 0">
+            ,qrcode
+        </if>
+        )
+        values (#{name},
+        <if test="categoryId != 0">
+            #{categoryId},
+        </if>
+        #{legalPerson}, #{creditCode}, #{estabDate}, #{annulSalesVolume}, #{staffScale}, #{recruitScale}, #{province},
+        #{city}, #{district}, #{address}, #{longitude}, #{latitude}, #{licenseNumber},
+        <if test="licensePhoto != 0">
+            #{licensePhoto},
+        </if>
+        <if test="bankAccountPhoto != 0">
+            #{bankAccountPhoto},
+        </if>
+        #{contactName}, #{contactPhone}, #{introduction}, #{qualificationNumber},
+        <if test="qualificationPhoto != 0">
+            #{qualificationPhoto},
+        </if>
+        <if test="adverPhoto != 0">
+            #{adverPhoto},
+        </if>
+        #{photoNumber}, #{courseCategoryNumber}, #{registerState},#{fail_reason}
+        <if test="qrcode != 0">
+            ,#{qrcode}
+        </if>
+        );
+    </insert>
+
+<!--    添加到归档文件-->
+    <insert id="insertLogOff" keyProperty="orgId" useGeneratedKeys="true">
+        insert into
+        organizations_log_off (org_id,name,
+        <if test="categoryId != 0">
+            category,
+        </if>
+        legal_person, credit_code, estab_date, annul_sales_volume, staff_scale, recruit_scale, province, city, district,
+        address, longitude, latitude, license_number,
+        <if test="licensePhoto != 0">
+            license_photo,
+        </if>
+        <if test="bankAccountPhoto != 0">
+            bank_account_photo,
+        </if>
+        contact_name, contact_phone, introduction, qualification_number,
+        <if test="qualificationPhoto != 0">
+            qualification_photo,
+        </if>
+        <if test="adverPhoto != 0">
+            adver_photo,
+        </if>
+        photo_number, course_category_number, register_state,fail_reason
+        <if test="qrcode != 0">
+            ,qrcode
+        </if>
+        )
+        values (#{orgId},#{name},
+        <if test="categoryId != 0">
+            #{categoryId},
+        </if>
+        #{legalPerson}, #{creditCode}, #{estabDate}, #{annulSalesVolume}, #{staffScale}, #{recruitScale}, #{province},
+        #{city}, #{district}, #{address}, #{longitude}, #{latitude}, #{licenseNumber},
+        <if test="licensePhoto != 0">
+            #{licensePhoto},
+        </if>
+        <if test="bankAccountPhoto != 0">
+            #{bankAccountPhoto},
+        </if>
+        #{contactName}, #{contactPhone}, #{introduction}, #{qualificationNumber},
+        <if test="qualificationPhoto != 0">
+            #{qualificationPhoto},
+        </if>
+        <if test="adverPhoto != 0">
+            #{adverPhoto},
+        </if>
+        #{photoNumber}, #{courseCategoryNumber}, #{register_state},#{fail_reason}
+        <if test="qrcode != 0">
+            ,#{qrcode}
+        </if>
+        );
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update organizations
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="categoryId != null and categoryId != 0">
+                categoryId = #{categoryId},
+            </if>
+            <if test="legalPerson != null and legalPerson != ''">
+                legal_person = #{legalPerson},
+            </if>
+            <if test="creditCode != null and creditCode != ''">
+                credit_code = #{creditCode},
+            </if>
+            <if test="estabDate != null">
+                estab_date = #{estabDate},
+            </if>
+            <if test="annulSalesVolume != null">
+                annul_sales_volume = #{annulSalesVolume},
+            </if>
+            <if test="staffScale != null">
+                staff_scale = #{staffScale},
+            </if>
+            <if test="recruitScale != null">
+                recruit_scale = #{recruitScale},
+            </if>
+            <if test="province != null and province != ''">
+                province = #{province},
+            </if>
+            <if test="city != null and city != ''">
+                city = #{city},
+            </if>
+            <if test="district != null and district != ''">
+                district = #{district},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="longitude != 0">
+                longitude = #{longitude},
+            </if>
+            <if test="latitude != 0">
+                latitude = #{latitude},
+            </if>
+            <if test="licenseNumber != null and licenseNumber != ''">
+                license_number = #{licenseNumber},
+            </if>
+            <if test="licensePhoto != null and licensePhoto != 0">
+                license_photo = #{licensePhoto},
+            </if>
+            <if test="bankAccountPhoto != null and bankAccountPhoto != 0">
+                bank_account_photo = #{bankAccountPhoto},
+            </if>
+            <if test="contactName != null and contactName != ''">
+                contact_name = #{contactName},
+            </if>
+            <if test="contactPhone != null and contactPhone != ''">
+                contact_phone = #{contactPhone},
+            </if>
+            <if test="introduction != null and introduction != ''">
+                introduction = #{introduction},
+            </if>
+            <if test="qualificationNumber != null and qualificationNumber != ''">
+                qualification_number = #{qualificationNumber},
+            </if>
+            <if test="qualificationPhoto != null and qualificationPhoto!=0">
+                qualification_photo = #{qualificationPhoto},
+            </if>
+            <if test="adverPhoto != null and adverPhoto!=0">
+                adver_photo = #{adverPhoto},
+            </if>
+            <if test="photoNumber != 0">
+                photo_number = #{photoNumber},
+            </if>
+            <if test="courseCategoryNumber != 0">
+                course_category_number = #{courseCategoryNumber},
+            </if>
+            <if test="registerState != null">
+                register_state = #{registerState},
+            </if>
+            <if test="fail_reason != null and fail_reason != ''">
+                fail_reason = #{fail_reason},
+            </if>
+            <if test="qrcode != 0">
+                qrcode = #{qrcode}
+            </if>
+        </set>
+        where org_id = #{orgId}
+    </update>
+    <update id="updateRegisterState">
+        update organizations set register_state=#{state} where org_id = #{orgId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from organizations
+        where org_id = #{orgId}
+    </delete>
+
+    <select id="queryOrganizations" parameterType="com.oes.model.query.OrganizationQuery"
+            resultMap="OrganizationsMap">
+        select * from organizations where register_state = 1
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+            <if test="name != null and name != ''">
+                and name LIKE concat('%',#{name},'%')
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="pageNum != null and pageNum != 0 and pageSize != null and pageSize != 0">
+                order by org_id limit ${pageSize * (pageNum-1)},#{pageSize}
+            </if>
+    </select>
+
+    <select id="queryByStateQuery" parameterType="com.oes.model.query.OrganizationQuery" resultMap="OrganizationsMap">
+        select * from organizations where 1=1
+        <if test="query != null and query != ''">
+            and (
+            name LIKE concat('%',#{query},'%') or
+            contact_name LIKE concat('%',#{query},'%') or
+            org_id = #{query}
+            )
+        </if>
+        <if test="province != null and province != ''">
+            and province = #{province}
+        </if>
+        <if test="state != null">
+            and register_state = #{state}
+        </if>
+        <if test="city != null and city != ''">
+            and city = #{city}
+        </if>
+        <if test="district != null and district != ''">
+            and district = #{district}
+        </if>
+    </select>
+
+    <select id="getOrganizationTeacher" resultMap="OrganizationTeacherMap">
+        SELECT o.org_id, o.name, t.userid teacher_id, a.name teacher_name from organizations o
+        LEFT JOIN teachers t
+        ON t.organization_id = o.org_id
+        LEFT JOIN authenticated_users a
+        ON a.userid = t.userid
+    </select>
+    <select id="getOrgRecommend" resultMap="OrganizationsMap">
+        SELECT x.org_id , x.introduction, x.name, x.adver_photo ,(studentCount * #{studentRate} + courseCount * #{courseRate}) score
+        FROM
+        (SELECT o.org_id ,o.name,o.introduction,o.adver_photo ,count(s.student_id) studentCount from organizations o
+        LEFT JOIN organizations_students s
+        ON s.organization = o.org_id
+        GROUP BY o.org_id) x
+        JOIN
+        (SELECT org_id,COUNT(course_id) courseCount
+        FROM organizations o
+        LEFT JOIN courses c
+        ON c.organization_id = o.org_id
+        GROUP BY o.org_id) y
+        ON x.org_id = y.org_id
+        ORDER BY score DESC
+        LIMIT #{recommendNum}
+    </select>
+
+</mapper>

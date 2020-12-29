@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.OrganizationCategoryDao">
+
+    <resultMap type="com.oes.model.entity.OrganizationCategory" id="OrganizationCategoryMap">
+        <result property="orgCategoryId" column="org_category_id" jdbcType="OTHER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrganizationCategoryMap">
+        select
+          org_category_id, name
+        from organization_category
+        where org_category_id = #{orgCategoryId}
+    </select>
+
+    <select id="queryByName" resultMap="OrganizationCategoryMap">
+        select
+            org_category_id, name
+        from organization_category
+        where name = #{name}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OrganizationCategoryMap">
+        select
+          org_category_id, name
+        from organization_category
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryByEntity" resultMap="OrganizationCategoryMap">
+        select
+          org_category_id, name
+        from organization_category
+        <where>
+            <if test="orgCategoryId != null">
+                and org_category_id = #{orgCategoryId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAll" resultMap="OrganizationCategoryMap">
+        select
+        org_category_id, name
+        from organization_category
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orgCategoryId" useGeneratedKeys="true">
+        insert into organization_category(name)
+        values (#{name})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update organization_category
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+        </set>
+        where org_category_id = #{orgCategoryId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from organization_category where org_category_id = #{orgCategoryId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.core.user.dao.RolesDao">
+
+    <resultMap type="com.oes.model.entity.Role" id="RolesMap">
+        <id property="roleid" column="roleid" jdbcType="TINYINT" />
+        <result property="roleName" column="role_name" jdbcType="VARCHAR" />
+        <result property="roleTableName" column="role_table_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <select id="queryByName" resultMap="RolesMap">
+        select
+            roleid, role_name, role_table_name
+        from roles
+        where role_name=#{name}
+    </select>
+
+
+
+</mapper>

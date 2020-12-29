@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.TeachersDao">
+
+    <resultMap type="com.oes.model.entity.Teacher" id="TeachersMap">
+        <result property="userid" column="userid" jdbcType="INTEGER"/>
+        <result property="organizationId" column="organization_id" jdbcType="INTEGER"/>
+        <result property="photoId" column="photo_id" jdbcType="INTEGER"/>
+        <result property="adverPhoto" column="adver_photo" jdbcType="INTEGER"/>
+        <result property="briefIntro" column="brief_intro" jdbcType="VARCHAR"/>
+        <result property="homepage" column="homepage" jdbcType="VARCHAR"/>
+        <result property="weibo" column="weibo" jdbcType="VARCHAR"/>
+        <result property="keywords" column="keywords" jdbcType="VARCHAR"/>
+        <result property="gradSchool" column="grad_school" jdbcType="VARCHAR"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="degree" column="degree" jdbcType="VARCHAR"/>
+        <result property="gradCertId" column="grad_cert_id" jdbcType="VARCHAR"/>
+        <result property="gradCertPhoto" column="grad_cert_photo" jdbcType="INTEGER"/>
+        <result property="degreeCertId" column="degree_cert_id" jdbcType="VARCHAR"/>
+        <result property="degreeCertPhoto" column="degree_cert_photo" jdbcType="OTHER"/>
+        <result property="degree2" column="degree2" jdbcType="VARCHAR"/>
+        <result property="degree2CertId" column="degree2_cert_id" jdbcType="VARCHAR"/>
+        <result property="degree2CertPhoto" column="degree2_cert_photo" jdbcType="INTEGER"/>
+        <result property="courseType1Id" column="course_type1_id" jdbcType="SMALLINT"/>
+        <result property="courseType2Id" column="course_type2_id" jdbcType="SMALLINT"/>
+        <result property="courseType3Id" column="course_type3_id" jdbcType="SMALLINT"/>
+        <result property="courseType4Id" column="course_type4_id" jdbcType="SMALLINT"/>
+        <result property="courseType5Id" column="course_type5_id" jdbcType="SMALLINT"/>
+        <result property="trainNum" column="train_num" jdbcType="TINYINT"/>
+        <result property="awardsNum" column="awards_num" jdbcType="TINYINT"/>
+        <result property="workNum" column="work_num" jdbcType="TINYINT"/>
+        <result property="orgCommentNum" column="org_comment_num" jdbcType="SMALLINT"/>
+        <result property="stuCommentNum" column="stu_comment_num" jdbcType="SMALLINT"/>
+        <result property="fullTime" column="full_time" jdbcType="TINYINT"/>
+        <result property="checked" column="checked" jdbcType="OTHER"/>
+        <result property="fail_reason" column="fail_reason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column">
+        userid, organization_id, photo_id, adver_photo, brief_intro, homepage, weibo, keywords,
+        grad_school, education, degree, grad_cert_id, grad_cert_photo, degree_cert_id, degree_cert_photo,
+        degree2, degree2_cert_id, degree2_cert_photo, course_type1_id, course_type2_id, course_type3_id,
+        course_type4_id, course_type5_id, train_num, awards_num, work_num, org_comment_num, stu_comment_num,
+        full_time, checked, fail_reason
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TeachersMap">
+        select
+        <include refid="Base_Column"></include>
+        from teachers
+        where userid = #{userid}
+    </select>
+
+
+    <!--通过机构id查询所有未审核的老师-->
+    <select id="queryUncheckedByOrgId" resultMap="TeachersMap">
+        select
+        <include refid="Base_Column"></include>
+        from teachers
+        where organization_id = #{orgId} and checked = 0
+    </select>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update teachers
+        <set>
+            <if test="organizationId != null and organizationId != 0">
+                organization_id = #{organizationId},
+            </if>
+            <if test="photoId != null and photoId != 0">
+                photo_id = #{photoId},
+            </if>
+            <if test="adverPhoto != null and adverPhoto != 0">
+                adver_photo = #{adverPhoto},
+            </if>
+            <if test="briefIntro != null and briefIntro != ''">
+                brief_intro = #{briefIntro},
+            </if>
+            <if test="homepage != null and homepage != ''">
+                homepage = #{homepage},
+            </if>
+            <if test="weibo != null and weibo != ''">
+                weibo = #{weibo},
+            </if>
+            <if test="keywords != null and keywords != ''">
+                keywords = #{keywords},
+            </if>
+            <if test="gradSchool != null and gradSchool != ''">
+                grad_school = #{gradSchool},
+            </if>
+            <if test="education != null and education != ''">
+                education = #{education},
+            </if>
+            <if test="degree != null and degree != ''">
+                degree = #{degree},
+            </if>
+            <if test="gradCertId != null and gradCertId != ''">
+                grad_cert_id = #{gradCertId},
+            </if>
+            <if test="gradCertPhoto != null and gradCertPhoto != 0">
+                grad_cert_photo = #{gradCertPhoto},
+            </if>
+            <if test="degreeCertId != null and degreeCertId != ''">
+                degree_cert_id = #{degreeCertId},
+            </if>
+            <if test="degreeCertPhoto != null and degreeCertPhoto != 0">
+                degree_cert_photo = #{degreeCertPhoto},
+            </if>
+            <if test="degree2 != null and degree2 != ''">
+                degree2 = #{degree2},
+            </if>
+            <if test="degree2CertId != null and degree2CertId != ''">
+                degree2_cert_id = #{degree2CertId},
+            </if>
+            <if test="degree2CertPhoto != null and degree2CertPhoto != 0">
+                degree2_cert_photo = #{degree2CertPhoto},
+            </if>
+            <choose>
+                <when test="courseType1Id == 0">
+                    course_type1_id = null,
+                </when>
+                <otherwise>
+                    course_type1_id = #{courseType1Id},
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="courseType2Id == 0">
+                    course_type2_id = null,
+                </when>
+                <otherwise>
+                    course_type2_id = #{courseType2Id},
+                </otherwise>
+            </choose>
+
+            <choose>
+                <when test="courseType3Id == 0">
+                    course_type3_id = null,
+                </when>
+                <otherwise>
+                    course_type3_id = #{courseType3Id},
+                </otherwise>
+            </choose>
+
+            <choose>
+                <when test="courseType4Id == 0">
+                    course_type4_id = null,
+                </when>
+                <otherwise>
+                    course_type4_id = #{courseType4Id},
+                </otherwise>
+            </choose>
+
+            <choose>
+                <when test="courseType5Id == 0">
+                    course_type5_id = null,
+                </when>
+                <otherwise>
+                    course_type5_id = #{courseType5Id},
+                </otherwise>
+            </choose>
+            <if test="trainNum != null">
+                train_num = #{trainNum},
+            </if>
+            <if test="awardsNum != null">
+                awards_num = #{awardsNum},
+            </if>
+            <if test="workNum != null">
+                work_num = #{workNum},
+            </if>
+            <if test="orgCommentNum != null">
+                org_comment_num = #{orgCommentNum},
+            </if>
+            <if test="stuCommentNum != null">
+                stu_comment_num = #{stuCommentNum},
+            </if>
+            <if test="fullTime != null">
+                full_time = #{fullTime},
+            </if>
+            <if test="checked != null">
+                checked = #{checked},
+            </if>
+            <if test="fail_reason != null and fail_reason != ''">
+                fail_reason = #{fail_reason}
+            </if>
+        </set>
+        where userid = #{userid}
+    </update>
+
+
+</mapper>
