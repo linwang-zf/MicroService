@@ -15,6 +15,7 @@
         <module name="edu-service-course-order" />
         <module name="edu-service-course" />
         <module name="edu-service-usercenter" />
+        <module name="edu-service-course-oder" />
         <module name="edu-service-bind" />
         <module name="edu-eureka" />
       </profile>
@@ -30,6 +31,7 @@
       <module name="edu-gateway" options="-parameters" />
       <module name="edu-service-bind" options="-parameters" />
       <module name="edu-service-course" options="-parameters" />
+      <module name="edu-service-course-oder" options="-parameters" />
       <module name="edu-service-course-order" options="-parameters" />
       <module name="edu-service-msm" options="-parameters" />
       <module name="edu-service-organization" options="-parameters" />

@@ -73,7 +73,7 @@
 
 ## Student(8007)
 - `/student/{stuId}` 通过id获取学生信息 （course）
-- `/student/preInfo/{user_id}` 
+- `/student/preInfo/{user_id}` 获取学生前置信息
 
 
 ---
