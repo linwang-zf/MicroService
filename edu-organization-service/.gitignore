@@ -3,5 +3,4 @@
 *.iml
 out
 /target/
-/README.md
 .DS_Store
