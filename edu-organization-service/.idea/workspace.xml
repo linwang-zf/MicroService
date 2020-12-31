@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="464ff554-1513-4666-b89d-9454faedb860" name="Default Changelist" comment="" />
+    <list default="true" id="464ff554-1513-4666-b89d-9454faedb860" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,12 +52,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/edu-service/edu-service-usercenter/src/main/resources/mapper" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -176,8 +182,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1608019296861</updated>
+      <workItem from="1609425120958" duration="76000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="182" key="#Project_Structure" timestamp="1608524952177">
@@ -240,9 +255,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="490" y="178" key="Maven.ArtifactSearchDialog/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1608471503672" />
-    <state x="463" y="165" key="SettingsEditor" timestamp="1609293472429">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="347" y="143" key="SettingsEditor" timestamp="1609425161665">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="347" y="143" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1609425161665" />
     <state x="463" y="165" key="SettingsEditor/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609293472429" />
     <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1608305739554">
       <screen x="0" y="0" width="1920" height="1040" />

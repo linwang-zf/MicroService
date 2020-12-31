@@ -21,7 +21,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="edu-service" target="1.8" />
-      <module name="edu-service-course-oder" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
