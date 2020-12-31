@@ -1,8 +1,7 @@
 package com.oes.util.datatime;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.util.Date;
 
 /**
  * @author : JQK
@@ -72,6 +71,13 @@ public class DateTimeUtil {
         } else {
             return false;
         }
+    }
+    public static Date LocalDate2Date(LocalDate localDate) {
+        if(null == localDate) {
+            return null;
+        }
+        ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
+        return Date.from(zonedDateTime.toInstant());
     }
 
 }

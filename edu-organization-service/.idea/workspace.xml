@@ -10,8 +10,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Interface" />
+        <option value="FxmlFile" />
         <option value="Yml File" />
         <option value="Class" />
       </list>
@@ -49,13 +49,27 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/edu-service/edu-service-usercenter/src/main/resources/mapper" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/edu-service/edu-service-shopping/src/main/resources/mapper" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\gitRepository\gitlab\edu-service\edu-organization-service\edu-service\edu-service-shopping\src\main\resources\mapper" />
+      <recent name="E:\gitRepository\gitlab\edu-service\edu-organization-service\edu-service\edu-service-teacher\src\main\resources\mapper" />
+      <recent name="E:\gitRepository\gitlab\edu-service\edu-organization-service\edu-service\edu-service-course\src\main\resources\mapper" />
+      <recent name="E:\gitRepository\gitlab\edu-service\edu-organization-service\edu-service\edu-service-usercenter\src\main\resources\mapper" />
+      <recent name="E:\gitRepository\gitlab\edu-service\edu-organization-service\edu-service\edu-service-student\src\main\resources\mapper" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.oes.util.page" />
+      <recent name="com.oes.vo" />
+      <recent name="com.oes.model.query.user" />
+      <recent name="com.oes.query" />
+      <recent name="com.oes.entity" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\gitRepository\gitlab\edu-service\edu-organization-service\edu-service" />
       <recent name="E:\gitRepository\edu-organization-service\edu-api-commons\src\main\resources\mapper" />
@@ -63,22 +77,8 @@
       <recent name="E:\gitRepository\edu-organization-service\edu-service\edu-service-usercenter\src\main\resources" />
       <recent name="E:\gitRepository\edu-organization-service\edu-service\edu-service-msm\src\main\resources" />
     </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.oes.exception" />
-      <recent name="com.oes.entity" />
-      <recent name="com.oes.dto" />
-      <recent name="com.oes.model.dto" />
-      <recent name="com.oes.query" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\gitRepository\gitlab\edu-service\edu-organization-service\edu-service\edu-service-usercenter\src\main\resources\mapper" />
-      <recent name="E:\gitRepository\gitlab\edu-service\edu-organization-service\edu-service\edu-service-student\src\main\resources\mapper" />
-      <recent name="E:\gitRepository\gitlab\edu-service\edu-organization-service\edu-service" />
-      <recent name="E:\gitRepository\edu-organization-service\edu-service\edu-service-student\src\main\resources\mapper" />
-      <recent name="E:\gitRepository\edu-organization-service\edu-service\edu-service-course-oder\src\main\resources\mapper" />
-    </key>
   </component>
-  <component name="RunManager" selected="Application.EurekaMain">
+  <component name="RunManager" selected="Application.ShoppingMain">
     <configuration name="CourseMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.oes.CourseMain" />
       <module name="edu-service-course" />
@@ -105,9 +105,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OrganizationMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.oes.OrganizationMain" />
-      <module name="edu-service-organization" />
+    <configuration name="GatewayMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.oes.GatewayMain" />
+      <module name="edu-gateway" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.oes.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.oes.ShoppingMain" />
+      <module name="edu-service-shopping" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.oes.*" />
@@ -131,26 +144,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StudentMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.oes.StudentMain" />
-      <module name="edu-service-student" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.oes.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.EurekaMain" />
+        <item itemvalue="Application.ShoppingMain" />
         <item itemvalue="Application.CourseMain" />
-        <item itemvalue="Application.StudentMain" />
+        <item itemvalue="Application.EurekaMain" />
+        <item itemvalue="Application.GatewayMain" />
         <item itemvalue="Application.SsoMain" />
-        <item itemvalue="Application.OrganizationMain" />
       </list>
     </recent_temporary>
   </component>
@@ -204,38 +204,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="270" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609403208345" />
-    <state width="1877" height="259" key="GridCell.Tab.0.bottom" timestamp="1609404607311">
+    <state width="1877" height="259" key="GridCell.Tab.0.bottom" timestamp="1609441036958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="259" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609404607311" />
-    <state width="1877" height="259" key="GridCell.Tab.0.center" timestamp="1609404607311">
+    <state width="1877" height="259" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609441036958" />
+    <state width="1877" height="259" key="GridCell.Tab.0.center" timestamp="1609441036958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="259" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609404607311" />
-    <state width="1877" height="259" key="GridCell.Tab.0.left" timestamp="1609404607311">
+    <state width="1877" height="259" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609441036958" />
+    <state width="1877" height="259" key="GridCell.Tab.0.left" timestamp="1609441036958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="259" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609404607311" />
-    <state width="1877" height="259" key="GridCell.Tab.0.right" timestamp="1609404607311">
+    <state width="1877" height="259" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609441036958" />
+    <state width="1877" height="259" key="GridCell.Tab.0.right" timestamp="1609441036958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="259" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609404607311" />
-    <state width="1877" height="312" key="GridCell.Tab.1.bottom" timestamp="1609391707307">
+    <state width="1877" height="259" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609441036958" />
+    <state width="1877" height="312" key="GridCell.Tab.1.bottom" timestamp="1609409480017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="312" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609391707307" />
-    <state width="1877" height="312" key="GridCell.Tab.1.center" timestamp="1609391707307">
+    <state width="1877" height="312" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609409480017" />
+    <state width="1877" height="312" key="GridCell.Tab.1.center" timestamp="1609409480017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="312" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609391707307" />
-    <state width="1877" height="312" key="GridCell.Tab.1.left" timestamp="1609391707307">
+    <state width="1877" height="312" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609409480017" />
+    <state width="1877" height="312" key="GridCell.Tab.1.left" timestamp="1609409480016">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="312" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609391707307" />
-    <state width="1877" height="312" key="GridCell.Tab.1.right" timestamp="1609391707307">
+    <state width="1877" height="312" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609409480016" />
+    <state width="1877" height="312" key="GridCell.Tab.1.right" timestamp="1609409480017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="312" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609391707307" />
+    <state width="1877" height="312" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609409480017" />
     <state x="490" y="178" key="Maven.ArtifactSearchDialog" timestamp="1608471503672">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -252,10 +252,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="759" y="301" key="chooseDestDirectoryDialog/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1608126747968" />
-    <state x="652" y="348" key="com.intellij.ide.util.TipDialog" timestamp="1609393511250">
+    <state x="652" y="348" key="com.intellij.ide.util.TipDialog" timestamp="1609426077005">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="652" y="348" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609393511250" />
+    <state x="652" y="348" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609426077005" />
     <state x="418" y="100" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1609136772520">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -264,18 +264,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="530" y="259" width="859" height="567" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1608728247207" />
-    <state x="202" y="305" width="759" height="735" key="find.popup" timestamp="1609399932989">
+    <state x="975" y="258" width="759" height="735" key="find.popup" timestamp="1609441006244">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="202" y="305" width="759" height="735" key="find.popup/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609399932989" />
+    <state x="975" y="258" width="759" height="735" key="find.popup/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609441006244" />
     <state width="1504" height="617" key="javadoc.popup" timestamp="1609228359610">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1504" height="617" key="javadoc.popup/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609228359610" />
-    <state x="334" y="224" key="new project wizard" timestamp="1609238403347">
+    <state x="334" y="224" key="new project wizard" timestamp="1609422599805">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="334" y="224" key="new project wizard/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609238403347" />
+    <state x="334" y="224" key="new project wizard/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609422599805" />
     <state x="663" y="153" key="refactoring.ChangeSignatureDialog" timestamp="1609213165287">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -290,7 +290,7 @@
       <breakpoints>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/edu-service/edu-service-usercenter/src/main/java/com/oes/service/UserService.java</url>
-          <line>181</line>
+          <line>182</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -379,9 +379,24 @@
           <option name="timeStamp" value="79" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/edu-service/edu-service-course/src/main/java/com/oes/controller/CoursesController.java</url>
-          <line>144</line>
-          <option name="timeStamp" value="80" />
+          <url>file://$PROJECT_DIR$/edu-service/edu-service-usercenter/src/main/java/com/oes/controller/AuthUserController.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/edu-service/edu-service-usercenter/src/main/java/com/oes/controller/AuthUserController.java</url>
+          <line>83</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/edu-service/edu-service-course/src/main/java/com/oes/service/CoursesService.java</url>
+          <line>512</line>
+          <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/edu-service/edu-service-course/src/main/java/com/oes/controller/CourseEnrollController.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="86" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/edu-service/edu-service-organization/src/main/java/com/oes/cotroller/OrganizationController.java</url>

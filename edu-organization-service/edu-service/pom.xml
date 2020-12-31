@@ -18,6 +18,8 @@
         <module>edu-service-bind</module>
         <module>edu-service-organization</module>
         <module>edu-service-student</module>
+        <module>edu-service-teacher</module>
+        <module>edu-service-shopping</module>
     </modules>
 
     <dependencies>

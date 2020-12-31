@@ -4,12 +4,12 @@ package com.oes.dao;
 import com.oes.dto.EnrollCoursesDTO;
 import com.oes.entity.CourseEnroll;
 import com.oes.vo.EnrollCoursesVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface CourseEnrollDao {
 
     List<EnrollCoursesVO> getUncheckedEnrollCourses(long orgId);

@@ -294,7 +294,7 @@ public class CoursesService {
         //TODO 12.31 测试
         //List<AuthenticatedUser> users = authenticatedUsersDao.queryAll();
         HttpResult authResult = restTemplate.exchange
-                (Url.SERVICE_USERCENTER+"/AuthenticatedUser/all", HttpMethod.GET, null,
+                (Url.SERVICE_USERCENTER+"/AuthenticatedUser/api/all", HttpMethod.GET, null,
                         new ParameterizedTypeReference<HttpResult<List<AuthenticatedUser>>>() {
                         }).getBody();
         List<AuthenticatedUser> users = (List<AuthenticatedUser>) authResult.getData();

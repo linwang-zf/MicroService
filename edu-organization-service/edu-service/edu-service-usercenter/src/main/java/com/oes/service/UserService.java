@@ -7,6 +7,7 @@ import com.oes.dao.RolesDao;
 import com.oes.dao.UsersDao;
 import com.oes.model.dto.BaseResultDTO;
 import com.oes.model.entity.AuthenticatedUser;
+import com.oes.model.entity.Role;
 import com.oes.model.entity.User;
 import com.oes.model.example.UserExample;
 import com.oes.model.query.user.UserRegisterQuery;
@@ -249,5 +250,21 @@ public class UserService {
         object.put("user", user);
         object.put("auth", auth);
         return HttpResult.ok("获取成功", object);
+    }
+
+    public boolean addRoles(Integer userId, String roleName) {
+        User user = usersDao.queryById(userId);
+        int roleId = rolesDao.queryByName(roleName).getRoleid();
+        if (user.getRole1() == roleId || user.getRole2() == roleId || user.getRole3() == roleId) return true;
+        if (user.getDefaultRole() == 0 || user.getDefaultRole() == 1) {
+            user.setDefaultRole(roleId);
+        } else if (user.getRole1() == 0 || user.getRole1() == 1) {
+            user.setRole1(roleId);
+        } else if (user.getRole2() == 0 || user.getRole2() == 1) {
+            user.setRole2(roleId);
+        } else if (user.getRole3() == 0 || user.getRole3() == 1) {
+            user.setRole3(roleId);
+        }
+        return usersDao.update(user) == 1;
     }
 }

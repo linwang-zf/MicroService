@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.CourseRollcallDao">
+  <resultMap id="BaseResultMap" type="com.oes.entity.CourseRollcall">
+    <id column="rollcall_id" jdbcType="INTEGER" property="rollcallId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="course_no" jdbcType="SMALLINT" property="courseNo" />
+    <result column="rollcall_time" jdbcType="TIMESTAMP" property="rollcallTime" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+
+  <resultMap id="CourseRollcallStu" type="com.oes.dto.CourseRollcallDTO">
+    <id column="rollcall_id" jdbcType="INTEGER" property="id" />
+    <result column="userid" jdbcType="INTEGER" property="userId"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="gender" jdbcType="INTEGER" property="gender"/>
+    <result column="phone" jdbcType="VARCHAR" property="phone"/>
+    <result column="second_tel" jdbcType="VARCHAR" property="secondTel"/>
+    <result column="mail" jdbcType="VARCHAR" property="mail"/>
+    <result column="school" jdbcType="VARCHAR" property="school"/>
+    <result column="grade" jdbcType="INTEGER" property="grade"/>
+    <result column="qq" jdbcType="VARCHAR" property="qq"/>
+    <result column="weixin" jdbcType="VARCHAR" property="weixin"/>
+    <result column="rollcall_time" javaType="java.time.LocalDateTime" jdbcType="TIMESTAMP" property="rollCallTime"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    rollcall_id, course_id, student_id, course_no, rollcall_time, state, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from course_rollcall
+    where rollcall_id = #{rollcallId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getIdByInfo" resultType="java.lang.Integer" parameterType="com.oes.entity.CourseRollcall">
+    select course_id
+    from course_rollcall
+    where student_id = #{studentId} and course_id = #{courseId} and course_no = #{courseNo};
+  </select>
+
+  <select id="getSignInRoster" resultMap="CourseRollcallStu">
+    select cr.rollcall_id as rollcall_id,
+       u.phone as phone, u.mail as mail, u.gender as gender,
+       stu.userid as userid, stu.name as name, stu.school as school, stu.grade as grade, stu.qq as qq, stu.weixin as weixin, stu.second_tel as second_tel,
+       cr.rollcall_time as rollcall_time
+    from course_rollcall cr, users u, students stu
+    where cr.course_id = #{courseId}
+        and cr.course_no = #{courseNo}
+        and cr.student_id = stu.userid and u.userid = stu.userid
+  </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from course_rollcall
+    where rollcall_id = #{rollcallId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.oes.entity.CourseRollcall"
+          useGeneratedKeys="true" keyProperty="rollcallId">
+    insert into course_rollcall
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="courseNo != null">
+        course_no,
+      </if>
+      <if test="rollcallTime != null">
+        rollcall_time,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="courseNo != null">
+        #{courseNo,jdbcType=SMALLINT},
+      </if>
+      <if test="rollcallTime != null">
+        #{rollcallTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oes.entity.CourseRollcall">
+    update course_rollcall
+    <set>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="courseNo != null">
+        course_no = #{courseNo,jdbcType=SMALLINT},
+      </if>
+      <if test="rollcallTime != null">
+        rollcall_time = #{rollcallTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rollcall_id = #{rollcallId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.oes.entity.CourseRollcall">
+    update course_rollcall
+    set course_id = #{courseId,jdbcType=INTEGER},
+      student_id = #{studentId,jdbcType=INTEGER},
+      course_no = #{courseNo,jdbcType=SMALLINT},
+      rollcall_time = #{rollcallTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where rollcall_id = #{rollcallId,jdbcType=INTEGER}
+  </update>
+</mapper>

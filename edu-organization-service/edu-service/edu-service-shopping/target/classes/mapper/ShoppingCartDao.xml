@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.ShoppingCartDao">
+  <resultMap id="BaseResultMap" type="com.oes.entity.ShoppingCart">
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="mer_info" jdbcType="VARCHAR" property="merInfo" />
+    <result column="mer_price" jdbcType="DECIMAL" property="merPrice" />
+    <result column="cart_state" jdbcType="TINYINT" property="cartState" />
+    <result column="recommender" jdbcType="VARCHAR" property="recommender" />
+  </resultMap>
+  <insert id="insert" parameterType="com.oes.entity.ShoppingCart">
+    insert into shopping_cart (user_id, mer_id, mer_info, 
+      mer_price, cart_state, recommender)
+    values (#{userId,jdbcType=INTEGER}, #{merId,jdbcType=INTEGER}, #{merInfo,jdbcType=VARCHAR}, 
+      #{merPrice,jdbcType=DECIMAL}, #{cartState,jdbcType=TINYINT}, #{recommender,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.oes.entity.ShoppingCart">
+    insert into shopping_cart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="merInfo != null">
+        mer_info,
+      </if>
+      <if test="merPrice != null">
+        mer_price,
+      </if>
+      <if test="cartState != null">
+        cart_state,
+      </if>
+      <if test="recommender != null">
+        recommender
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="merInfo != null">
+        #{merInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="merPrice != null">
+        #{merPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="cartState != null">
+        #{cartState,jdbcType=TINYINT},
+      </if>
+      <if test="recommender != null">
+        #{recommender,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findAllByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from shopping_cart
+    where user_id = #{userId}
+  </select>
+
+
+  <select id="findByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from shopping_cart
+    where user_id = #{userId} and cart_state = #{state}
+  </select>
+
+  <update id="selectAll" parameterType="java.lang.Integer">
+    update shopping_cart
+    set cart_state = 1
+    where user_id = #{userId}
+  </update>
+
+  <update id="unSelectAll" parameterType="java.lang.Integer">
+    update shopping_cart
+    set cart_state = 0
+    where user_id = #{userId}
+  </update>
+
+  <update id="selectIt" parameterType="java.lang.Integer">
+    update shopping_cart
+    set cart_state = 1
+    where user_id = #{userId} and mer_id = #{merId}
+  </update>
+
+  <update id="unSelectIt" parameterType="java.lang.Integer">
+    update shopping_cart
+    set cart_state = 0
+    where user_id = #{userId} and mer_id = #{merId}
+  </update>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from shopping_cart
+    where user_id = #{userId} and mer_id = #{merId}
+  </delete>
+
+  <select id="isExisted" parameterType="java.lang.Integer" resultType="com.oes.entity.ShoppingCart">
+    select * from shopping_cart
+    where user_id = #{userId} and mer_id = #{merId} and cart_state = 0
+  </select>
+
+</mapper>

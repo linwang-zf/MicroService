@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.OrderListDao">
+  <resultMap id="BaseResultMap" type="com.oes.entity.OrderList">
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="order_item" jdbcType="VARCHAR" property="orderItem" />
+    <result column="order_state" jdbcType="TINYINT" property="orderState" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="order_price" jdbcType="DECIMAL" property="orderPrice" />
+    <result column="total" jdbcType="DECIMAL" property="total" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="payer" jdbcType="VARCHAR" property="payer" />
+    <result column="payer_phone" jdbcType="VARCHAR" property="payerPhone" />
+    <result column="recommender" jdbcType="VARCHAR" property="recommender" />
+  </resultMap>
+  <insert id="insert" parameterType="com.oes.entity.OrderList">
+    insert into order_list (order_id, mer_id, user_id, 
+      order_time, order_item, order_state, 
+      pay_type, pay_time, order_price, 
+      total, operator, discount, payer, payerPhone, recommender)
+    values (#{orderId,jdbcType=INTEGER}, #{merId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{orderTime,jdbcType=TIMESTAMP}, #{orderItem,jdbcType=VARCHAR}, #{orderState,jdbcType=TINYINT}, 
+      #{payType,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{orderPrice,jdbcType=DECIMAL}, 
+      #{total,jdbcType=DECIMAL}, #{operator,jdbcType=VARCHAR}, #{discount,jdbcType=DECIMAL},
+      #{transaction,jdbcType=DECIMAL}, #{payer,jdbcType=VARCHAR}, #{payerPhone,jdbcType=VARCHAR},
+      #{recommender, jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.oes.entity.OrderList">
+    insert into order_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+      <if test="orderItem != null">
+        order_item,
+      </if>
+      <if test="orderState != null">
+        order_state,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="orderPrice != null">
+        order_price,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="transaction != null">
+        transaction,
+      </if>
+      <if test="payer != null">
+        payer,
+      </if>
+      <if test="payerPhone != null">
+        payer_phone,
+      </if>
+      <if test="recommender != null">
+        recommender
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderItem != null">
+        #{orderItem,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null">
+        #{orderState,jdbcType=TINYINT},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderPrice != null">
+        #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="transaction != null">
+        #{transaction,jdbcType=DECIMAL},
+      </if>
+      <if test="payer != null">
+        #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="payerPhone != null">
+        #{payerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="recommender != null">
+        #{recommender,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+
+  <select id="find" parameterType="com.oes.query.OrderListQuery" resultMap="BaseResultMap">
+    select * from
+    order_list
+    where 1=1
+    <if test="orderId != '' and orderId != null">
+      and order_id = #{orderId}
+    </if>
+    <if test="userId != '' and userId != null">
+      and user_id = #{userId}
+    </if>
+    <if test="orderState != null and orderState != '' or orderState == 0">
+      and order_state = #{orderState}
+    </if>
+    <if test="payType != null and payType != ''">
+      and pay_type = #{payType}
+    </if>
+    <if test="payer != null and payer != ''">
+      and payer = #{payer}
+    </if>
+    <if test="payerPhone != null and payerPhone != ''">
+      and payer_phone = #{payerPhone}
+    </if>
+      order by order_time desc
+  </select>
+
+  <select id="findByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from order_list
+    where user_id = #{userId} and order_state = #{state}
+  </select>
+
+  <select id="findAllByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from order_list
+    where user_id = #{userId}
+  </select>
+
+  <select id="findByOrderId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from order_list
+    where order_id = #{orderId}
+  </select>
+
+  <update id="cancelOrderList" parameterType="java.lang.Integer">
+    update order_list
+    set order_state = 0
+    where order_id = #{orderId}
+  </update>
+
+  <update id="cancelToBePaidOrderList">
+    update order_list
+    set order_state = 0
+    where order_state = 1
+  </update>
+
+  <update id="payment">
+    update order_list
+    set order_state = 2, pay_type = #{payType}, pay_time = #{payTime}, transaction = #{transaction},
+    payer = #{payer}, payer_phone = #{payerPhone}
+    where order_id = #{orderId}
+  </update>
+
+
+  <update id="setDiscount">
+    update order_list
+    set order_state = 2, operator = #{operator}, discount = #{discount}
+    where order_id = #{orderId} and mer_id = #{merId}
+  </update>
+
+</mapper>

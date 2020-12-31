@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.CourseMerDao">
+  <resultMap id="BaseResultMap" type="com.oes.entity.CourseMer">
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="mer_type" jdbcType="VARCHAR" property="merType" />
+    <result column="mer_time" jdbcType="TIMESTAMP" property="merTime" />
+    <result column="mer_state" jdbcType="TINYINT" property="merState" />
+    <result column="mer_stock" jdbcType="TINYINT" property="merStock" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="course_type_id" jdbcType="INTEGER" property="courseTypeId" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="course_introduction" jdbcType="VARCHAR" property="courseIntroduction" />
+    <result column="site" jdbcType="VARCHAR" property="site" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="total_count" jdbcType="TINYINT" property="totalCount" />
+    <result column="week_count" jdbcType="TINYINT" property="weekCount" />
+    <result column="minutes" jdbcType="TINYINT" property="minutes" />
+    <result column="course_time1" jdbcType="CHAR" property="courseTime1" />
+    <result column="course_time2" jdbcType="CHAR" property="courseTime2" />
+    <result column="course_time3" jdbcType="CHAR" property="courseTime3" />
+    <result column="course_time4" jdbcType="CHAR" property="courseTime4" />
+    <result column="course_time5" jdbcType="CHAR" property="courseTime5" />
+    <result column="course_time6" jdbcType="CHAR" property="courseTime6" />
+    <result column="max_stu_count" jdbcType="TINYINT" property="maxStuCount" />
+    <result column="refund_limit" jdbcType="TINYINT" property="refundLimit" />
+    <result column="price_per_hour" jdbcType="DECIMAL" property="pricePerHour" />
+    <result column="course_price" jdbcType="DECIMAL" property="coursePrice" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="teacher_org_id" jdbcType="INTEGER" property="teacherOrgId" />
+    <result column="adver_photo" jdbcType="INTEGER" property="adverPhoto" />
+    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="degree" jdbcType="VARCHAR" property="degree" />
+    <result column="full_time" jdbcType="TINYINT" property="fullTime" />
+    <result column="org_id" jdbcType="INTEGER" property="orgId" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+    <result column="credit_code" jdbcType="VARCHAR" property="creditCode" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="longitude" jdbcType="DOUBLE" property="longitude" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="license_photo" jdbcType="INTEGER" property="licensePhoto" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="org_introduction" jdbcType="VARCHAR" property="orgIntroduction" />
+    <result column="qualification_photo" jdbcType="INTEGER" property="qualificationPhoto" />
+    <result column="info1" jdbcType="VARCHAR" property="info1" />
+    <result column="info2" jdbcType="VARCHAR" property="info2" />
+    <result column="info3" jdbcType="VARCHAR" property="info3" />
+    <result column="info4" jdbcType="VARCHAR" property="info4" />
+    <result column="info5" jdbcType="VARCHAR" property="info5" />
+  </resultMap>
+  <insert id="insert" parameterType="com.oes.entity.CourseMer">
+    insert into course_mer (mer_id, mer_type, mer_time, 
+      mer_state, mer_stock, course_id, 
+      course_type_id, course_name, course_introduction, 
+      site, start_time, end_time, 
+      total_count, week_count, `minutes`, 
+      course_time1, course_time2, course_time3, 
+      course_time4, course_time5, course_time6, 
+      max_stu_count, refund_limit, price_per_hour, 
+      course_price, teacher_id, teacher_org_id, 
+      adver_photo, keywords, education, 
+      `degree`, full_time, org_id, 
+      org_name, credit_code, province, 
+      city, district, address, 
+      longitude, latitude, license_photo, 
+      contact_phone, org_introduction, qualification_photo, 
+      info1, info2, info3, 
+      info4, info5)
+    values (#{merId,jdbcType=INTEGER}, #{merType,jdbcType=VARCHAR}, #{merTime,jdbcType=TIMESTAMP}, 
+      #{merState,jdbcType=TINYINT}, #{merStock,jdbcType=TINYINT}, #{courseId,jdbcType=INTEGER}, 
+      #{courseTypeId,jdbcType=INTEGER}, #{courseName,jdbcType=VARCHAR}, #{courseIntroduction,jdbcType=VARCHAR}, 
+      #{site,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{totalCount,jdbcType=TINYINT}, #{weekCount,jdbcType=TINYINT}, #{minutes,jdbcType=TINYINT}, 
+      #{courseTime1,jdbcType=CHAR}, #{courseTime2,jdbcType=CHAR}, #{courseTime3,jdbcType=CHAR}, 
+      #{courseTime4,jdbcType=CHAR}, #{courseTime5,jdbcType=CHAR}, #{courseTime6,jdbcType=CHAR}, 
+      #{maxStuCount,jdbcType=TINYINT}, #{refundLimit,jdbcType=TINYINT}, #{pricePerHour,jdbcType=DECIMAL}, 
+      #{coursePrice,jdbcType=DECIMAL}, #{teacherId,jdbcType=INTEGER}, #{teacherOrgId,jdbcType=INTEGER}, 
+      #{adverPhoto,jdbcType=INTEGER}, #{keywords,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{degree,jdbcType=VARCHAR}, #{fullTime,jdbcType=TINYINT}, #{orgId,jdbcType=INTEGER}, 
+      #{orgName,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, #{licensePhoto,jdbcType=INTEGER}, 
+      #{contactPhone,jdbcType=VARCHAR}, #{orgIntroduction,jdbcType=VARCHAR}, #{qualificationPhoto,jdbcType=INTEGER}, 
+      #{info1,jdbcType=VARCHAR}, #{info2,jdbcType=VARCHAR}, #{info3,jdbcType=VARCHAR}, 
+      #{info4,jdbcType=VARCHAR}, #{info5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.oes.entity.CourseMer">
+    insert into course_mer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="merType != null">
+        mer_type,
+      </if>
+      <if test="merTime != null">
+        mer_time,
+      </if>
+      <if test="merState != null">
+        mer_state,
+      </if>
+      <if test="merStock != null">
+        mer_stock,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="courseTypeId != null">
+        course_type_id,
+      </if>
+      <if test="courseName != null">
+        course_name,
+      </if>
+      <if test="courseIntroduction != null">
+        course_introduction,
+      </if>
+      <if test="site != null">
+        site,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="totalCount != null">
+        total_count,
+      </if>
+      <if test="weekCount != null">
+        week_count,
+      </if>
+      <if test="minutes != null">
+        `minutes`,
+      </if>
+      <if test="courseTime1 != null">
+        course_time1,
+      </if>
+      <if test="courseTime2 != null">
+        course_time2,
+      </if>
+      <if test="courseTime3 != null">
+        course_time3,
+      </if>
+      <if test="courseTime4 != null">
+        course_time4,
+      </if>
+      <if test="courseTime5 != null">
+        course_time5,
+      </if>
+      <if test="courseTime6 != null">
+        course_time6,
+      </if>
+      <if test="maxStuCount != null">
+        max_stu_count,
+      </if>
+      <if test="refundLimit != null">
+        refund_limit,
+      </if>
+      <if test="pricePerHour != null">
+        price_per_hour,
+      </if>
+      <if test="coursePrice != null">
+        course_price,
+      </if>
+      <if test="teacherId != null">
+        teacher_id,
+      </if>
+      <if test="teacherOrgId != null">
+        teacher_org_id,
+      </if>
+      <if test="adverPhoto != null">
+        adver_photo,
+      </if>
+      <if test="keywords != null">
+        keywords,
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="degree != null">
+        `degree`,
+      </if>
+      <if test="fullTime != null">
+        full_time,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="orgName != null">
+        org_name,
+      </if>
+      <if test="creditCode != null">
+        credit_code,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="licensePhoto != null">
+        license_photo,
+      </if>
+      <if test="contactPhone != null">
+        contact_phone,
+      </if>
+      <if test="orgIntroduction != null">
+        org_introduction,
+      </if>
+      <if test="qualificationPhoto != null">
+        qualification_photo,
+      </if>
+      <if test="info1 != null">
+        info1,
+      </if>
+      <if test="info2 != null">
+        info2,
+      </if>
+      <if test="info3 != null">
+        info3,
+      </if>
+      <if test="info4 != null">
+        info4,
+      </if>
+      <if test="info5 != null">
+        info5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="merType != null">
+        #{merType,jdbcType=VARCHAR},
+      </if>
+      <if test="merTime != null">
+        #{merTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merState != null">
+        #{merState,jdbcType=TINYINT},
+      </if>
+      <if test="merStock != null">
+        #{merStock,jdbcType=TINYINT},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="courseTypeId != null">
+        #{courseTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="courseName != null">
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseIntroduction != null">
+        #{courseIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null">
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalCount != null">
+        #{totalCount,jdbcType=TINYINT},
+      </if>
+      <if test="weekCount != null">
+        #{weekCount,jdbcType=TINYINT},
+      </if>
+      <if test="minutes != null">
+        #{minutes,jdbcType=TINYINT},
+      </if>
+      <if test="courseTime1 != null">
+        #{courseTime1,jdbcType=CHAR},
+      </if>
+      <if test="courseTime2 != null">
+        #{courseTime2,jdbcType=CHAR},
+      </if>
+      <if test="courseTime3 != null">
+        #{courseTime3,jdbcType=CHAR},
+      </if>
+      <if test="courseTime4 != null">
+        #{courseTime4,jdbcType=CHAR},
+      </if>
+      <if test="courseTime5 != null">
+        #{courseTime5,jdbcType=CHAR},
+      </if>
+      <if test="courseTime6 != null">
+        #{courseTime6,jdbcType=CHAR},
+      </if>
+      <if test="maxStuCount != null">
+        #{maxStuCount,jdbcType=TINYINT},
+      </if>
+      <if test="refundLimit != null">
+        #{refundLimit,jdbcType=TINYINT},
+      </if>
+      <if test="pricePerHour != null">
+        #{pricePerHour,jdbcType=DECIMAL},
+      </if>
+      <if test="coursePrice != null">
+        #{coursePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherOrgId != null">
+        #{teacherOrgId,jdbcType=INTEGER},
+      </if>
+      <if test="adverPhoto != null">
+        #{adverPhoto,jdbcType=INTEGER},
+      </if>
+      <if test="keywords != null">
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null">
+        #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="fullTime != null">
+        #{fullTime,jdbcType=TINYINT},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null">
+        #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="licensePhoto != null">
+        #{licensePhoto,jdbcType=INTEGER},
+      </if>
+      <if test="contactPhone != null">
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIntroduction != null">
+        #{orgIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationPhoto != null">
+        #{qualificationPhoto,jdbcType=INTEGER},
+      </if>
+      <if test="info1 != null">
+        #{info1,jdbcType=VARCHAR},
+      </if>
+      <if test="info2 != null">
+        #{info2,jdbcType=VARCHAR},
+      </if>
+      <if test="info3 != null">
+        #{info3,jdbcType=VARCHAR},
+      </if>
+      <if test="info4 != null">
+        #{info4,jdbcType=VARCHAR},
+      </if>
+      <if test="info5 != null">
+        #{info5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="putOnCourseMer" parameterType="java.lang.Integer">
+    update course_mer
+    set mer_state = 1
+    where mer_id = #{merId}
+  </update>
+
+  <update id="pullOffCourseMer" parameterType="java.lang.Integer">
+    update course_mer
+    set mer_state = 0
+    where mer_id = #{merId}
+  </update>
+
+  <select id="findCourseMerByState" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from course_mer
+    where mer_state = #{merState}
+  </select>
+
+  <select id="findCourseMer" resultMap="BaseResultMap">
+    select * from course_mer
+    where 1=1
+    <if test="orgId != null and orgId != ''">
+      and org_id = #{orgId}
+    </if>
+    <if test="merState != null and merState != '' or merState == 0">
+      and mer_state = #{merState}
+    </if>
+    <if test="courseName != null and courseName != ''">
+      and course_name like "%"#{courseName}"%"
+    </if>
+    <if test="pageNum != null and pageNum != 0 and pageSize != null and pageSize != 0">
+      order by mer_time desc limit ${pageSize * (pageNum-1)},#{pageSize}
+    </if>
+
+  </select>
+
+  <select id="findByMerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from course_mer
+    where mer_id = #{merId}
+  </select>
+
+  <select id="findByCourseId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from course_mer
+    where course_id = #{courseId}
+  </select>
+
+  <select id="findByOrgId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from course_mer
+    where org_id = #{orgId}
+  </select>
+
+  <select id="findByOrgIds" resultMap="BaseResultMap">
+    select * from course_mer
+    where
+        <if test="orgId != null and orgId != ''">
+             org_id = #{orgId}  and
+        </if>
+     mer_type = #{s}
+  </select>
+
+  <select id="findByTeacherId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from course_mer
+    where teacher_id = #{teacherIdId}
+  </select>
+
+  <update id="reduceStock" parameterType="java.lang.Integer">
+    update course_mer
+    set mer_stock = mer_stock - 1
+    where mer_id = #{merId} and mer_stock > 0
+  </update>
+
+  <update id="increaseStock" parameterType="java.lang.Integer">
+    update course_mer
+    set mer_stock = mer_stock + 1
+    where mer_id = #{merId}
+  </update>
+
+  <select id="findTotal" resultType="java.lang.Integer">
+    select count(*)  from course_mer
+  </select>
+
+  <select id="findCourseMerCount" resultType="java.lang.Integer">
+    select count(*) from course_mer
+    where 1=1
+    <if test="orgId != null and orgId != ''">
+      and org_id = #{orgId}
+    </if>
+    <if test="merState != null and merState != '' or merState == 0">
+      and mer_state = #{merState}
+    </if>
+    <if test="courseName != null and courseName != ''">
+      and course_name like "%"#{courseName}"%"
+    </if>
+  </select>
+
+</mapper>

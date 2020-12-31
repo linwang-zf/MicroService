@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.MerchandiseDao">
+  <resultMap id="BaseResultMap" type="com.oes.entity.Merchandise">
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="mer_type" jdbcType="VARCHAR" property="merType" />
+    <result column="mer_time" jdbcType="TIMESTAMP" property="merTime" />
+    <result column="mer_price" jdbcType="DECIMAL" property="merPrice" />
+    <result column="mer_state" jdbcType="TINYINT" property="merState" />
+    <result column="mer_stock" jdbcType="INTEGER" property="merStock" />
+  </resultMap>
+  <insert id="insert" parameterType="com.oes.entity.Merchandise">
+    insert into merchandise (mer_id, mer_type, mer_time, 
+      mer_price, mer_state, mer_stock
+      )
+    values (#{merId,jdbcType=INTEGER}, #{merType,jdbcType=VARCHAR}, #{merTime,jdbcType=TIMESTAMP}, 
+      #{merPrice,jdbcType=DECIMAL}, #{merState,jdbcType=TINYINT}, #{merStock,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.oes.entity.Merchandise">
+    insert into merchandise
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="merType != null">
+        mer_type,
+      </if>
+      <if test="merTime != null">
+        mer_time,
+      </if>
+      <if test="merPrice != null">
+        mer_price,
+      </if>
+      <if test="merState != null">
+        mer_state,
+      </if>
+      <if test="merStock != null">
+        mer_stock,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="merType != null">
+        #{merType,jdbcType=VARCHAR},
+      </if>
+      <if test="merTime != null">
+        #{merTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merPrice != null">
+        #{merPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="merState != null">
+        #{merState,jdbcType=TINYINT},
+      </if>
+      <if test="merStock != null">
+        #{merStock,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findMerchandiseByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from merchandise
+    where mer_type = #{merType}
+  </select>
+
+  <select id="findMerchandiseById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from merchandise
+    where mer_id = #{merId}
+  </select>
+
+  <select id="findMerchandiseByState" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from merchandise
+    where mer_state = #{merState}
+  </select>
+
+  <update id="putOnMerchandise" parameterType="java.lang.Integer">
+    update merchandise
+    set mer_state = 1
+    where mer_id = #{merId}
+  </update>
+
+  <update id="pullOffMerchandise" parameterType="java.lang.Integer">
+    update merchandise
+    set mer_state = 0
+    where mer_id = #{merId}
+  </update>
+
+  <update id="reduceStock" parameterType="java.lang.Integer">
+    update merchandise
+    set mer_stock = mer_stock - 1
+    where mer_id = #{merId} and mer_stock > 0
+  </update>
+
+  <update id="increaseStock" parameterType="java.lang.Integer">
+    update merchandise
+    set mer_stock = mer_stock + 1
+    where mer_id = #{merId}
+  </update>
+</mapper>

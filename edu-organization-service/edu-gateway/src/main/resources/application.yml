@@ -6,11 +6,16 @@ spring:
     name: edu-service-gateway
   cloud:
     gateway:
+#      routes:
+#        - id: service-user  #payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名
+#          uri: http://SERVICE-USERCENTER         #匹配后提供服务的路由地址
+#          predicates:
+#            - Path=/user/*          #断言，路径相匹配的进行路由
       routes:
-        - id: http://localhost:8001  #payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名
+        - id: route-simple  #payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名
           uri: http://localhost:8001         #匹配后提供服务的路由地址
           predicates:
-            - Path=/user/verifyCode          #断言，路径相匹配的进行路由
+            - Path=/user/**          #断言，路径相匹配的进行路由
 
 
 

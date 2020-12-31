@@ -3,12 +3,12 @@ package com.oes.dao;
 
 import com.oes.dto.CourseRollcallDTO;
 import com.oes.entity.CourseRollcall;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface CourseRollcallDao {
     int deleteByPrimaryKey(Integer rollcallId);
 

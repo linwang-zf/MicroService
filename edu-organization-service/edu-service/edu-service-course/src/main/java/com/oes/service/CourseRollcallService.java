@@ -52,7 +52,7 @@ public class CourseRollcallService {
 
     @Autowired
     public CourseRollcallService(final CourseRollcallDao courseRollcallDao, final CoursesDao coursesDao,
-                                  CourseTableDao courseTableDao) {
+                                 CourseTableDao courseTableDao) {
         this.courseRollcallDao = courseRollcallDao;
         this.coursesDao = coursesDao;
         this.courseTableDao = courseTableDao;
@@ -76,7 +76,8 @@ public class CourseRollcallService {
 
         if (Objects.isNull(course))
             throw new CourseNotExistsException("没有查询到id为" + courseId + "的课程信息");
-
+//        if (Objects.isNull(student))
+//            throw new StuNotExistsException("没有查询到id为" + stuId + "的学生信息");
         LocalDate start = course.getStartTime();
         LocalDate end = course.getEndTime();
         int minutes = course.getMinutes();

@@ -99,10 +99,18 @@ public class UserController {
         return userService.insert(user,roleName);
     }
     //courseContrller
+    //teacher
     @GetMapping("/user/auth/api/{userId}")
     public HttpResult getUserAuthInfo(@PathVariable Integer userId){
         return userService.getUserAuthInfoById(userId);
     }
+
+    @PostMapping("/user/api/role")
+    public boolean addRoles(@RequestBody Integer userId, @RequestBody String roleName){
+        return userService.addRoles(userId,roleName);
+    }
+
+
 
 
 }

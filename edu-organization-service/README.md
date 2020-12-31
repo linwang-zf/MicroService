@@ -37,7 +37,7 @@
 - `/course/organization/{orgId}` 关键字模糊查询课程信息
 - `/course/getQueryCourse` 根据条件查询课程
 - `/course/queryCourse/{courseId}` 根据id查询课程
-- `/course/{orgId}` 获取机构的所有课程
+- `/course/{orgId}` 获取机构的所有课程 (使用Auth.getAll)
 - `/course/organization/{orgId}/basicInfo` 课程信息模糊查询的前置信息(但是此处没有设计好，前置信息依赖teacher（—>user、Auth)）、courseCategory
 - `/course/{orgId}/basicInfo` 添加课程时的基础信息
 
@@ -45,6 +45,14 @@
 - `/coursecategory/queryAllCourseCategoryIdAndName` 获取所有课程类别的ID和Name
 
 - `/course/syllabus` 课表生成(不同角色获取到不同课表)
+
+- `/course/{orgId}/option/student/{stuId}` 获取已经开始且该学生尚未选修过的课程==简短信息
+- `/course/{courseId}/student` 获取课程的选修名单
+- `/course/{courseId}/trialstudent` 获取课程的试听名单
+
+- `/student/{userId}/course/{courseId}/sign`课程签到
+- `/course/{courseId}/signIn/roster` 课程签到名单
+- `/course/history` 课程的上课历史
 
  **对外API**
  1. `/course/organization/{orgId} "关键字模糊查询课程信息` course-order模块引用（获取已经开始且该学生尚未选修过的课程==简短信息）
@@ -91,6 +99,7 @@
 - `/student/organization/{org_id}/{user_id}` delete 学生解除挂靠某机构
 
 
+## Teacher
 
 ---
 ## Euraka(7001)
