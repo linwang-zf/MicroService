@@ -2,5 +2,5 @@
 .idea
 *.iml
 out
-/target/
+target
 .DS_Store
