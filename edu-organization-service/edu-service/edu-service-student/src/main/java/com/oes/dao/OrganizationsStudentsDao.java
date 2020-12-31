@@ -1,56 +1,51 @@
-/*
 package com.oes.dao;
 
-import com.oes.model.entity.OrganizationsStudent;
+
+import com.oes.entity.OrganizationsStudent;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-*/
 /**
  * (OrganizationsStudent)表数据库访问层
  *
  * @author makejava
  * @since 2020-03-27 14:40:13
- *//*
+ */
 
-@Repository
+@Mapper
 public interface OrganizationsStudentsDao {
 
-    */
 /**
      * 通过ID查询单条数据
      *
      * @param organization 主键
      * @param studentId 主键
      * @return 实例对象
-     *//*
+     */
 
     OrganizationsStudent queryById(@Param("orgId") long organization, @Param("stuId") long studentId);
 
 
-    */
 /**
      * 通过机构Id查询
      * @param organization 机构id
      * @return 机构学生对应关系列表
-     *//*
+     */
 
     List<OrganizationsStudent> queryByOrgId(long organization);
 
 
-    */
 /**
      * 通过学生id查询
      * @param studentId 学生Id
      * @return 机构学生对应关系列表
-     *//*
+     */
 
     List<OrganizationsStudent> queryByStuId(long studentId);
 
 
-    */
 /**
      * 通过内部学号查询
      * @param orgId 机构的Id
@@ -99,11 +94,10 @@ public interface OrganizationsStudentsDao {
      *
      * @param organizationsStudent 实例对象
      * @return 影响行数
-     *//*
+     */
 
     int insert(OrganizationsStudent organizationsStudent);
 
-    */
 /**
      * 修改数据
      *
@@ -119,11 +113,10 @@ public interface OrganizationsStudentsDao {
      *
      * @param organization 主键
      * @return 影响行数
-     *//*
+     */
 
     int deleteById(@Param("orgId") long organization, @Param("stuId") long studentId);
 
-    */
 /**
      * 通过机构id删除
      * @param orgId 机构id
@@ -137,8 +130,8 @@ public interface OrganizationsStudentsDao {
      * 通过学生id删除
      * @param stuId 学生id
      * @return 影响行数
-     *//*
+     */
 
     int deleteByStuId(long stuId);
 
-}*/
+}

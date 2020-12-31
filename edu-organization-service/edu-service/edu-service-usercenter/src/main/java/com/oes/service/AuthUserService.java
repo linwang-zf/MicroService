@@ -9,12 +9,14 @@ import com.oes.model.dto.BaseResultDTO;
 import com.oes.model.entity.AuthenticatedUser;
 import com.oes.model.entity.Picture;
 import com.oes.model.entity.User;
+import com.oes.util.http.HttpResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -112,5 +114,15 @@ public class AuthUserService {
         object.put("realName", "测试名称");
         object.put("cardId", "412586998563001258");
         return new BaseResultDTO(BusinessType.INSERT, true,"识别成功", object);
+    }
+
+
+    /******************************对外API************/
+    public List<AuthenticatedUser>  getAllAuth(){
+        return  authUserDao.queryAll();
+    }
+
+    public List<AuthenticatedUser> queryNamesById(List<Integer> userIds){
+        return authUserDao.queryNamesByIds(userIds);
     }
 }

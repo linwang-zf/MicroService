@@ -18,6 +18,12 @@
 - `/AuthenticatedUser/{userid}` 查询认证用户信息
 - `/AuthenticatedUser/idCardPhoto` 上传身份证照片
 
+**对外API**
+1. `user/api` 用户insert student(手动录入学生信息)
+2. `AuthUserDao.queryById` (course)
+3. `AuthUserDao.getAll` (course)
+4. `/AuthenticatedUser/{userid}` 查询认证用户信息(course)
+
 ---
 ## msm(8002)
 - `send/{phone}` 调第三方接口发送短信验证码（有效期redies）
@@ -68,12 +74,22 @@
 
 ---
 ## Organization(8006)
+- `/organization` 机构信息录入
+- `/organization` put机构信息修改
+- `/organization/{org_id}` 获取机构的详细信息
 
+**对外API**
+1. `/organization/api/{org_id}` (queryById 对外 student、course)
 ---
 
 ## Student(8007)
 - `/student/{stuId}` 通过id获取学生信息 （course）
 - `/student/preInfo/{user_id}` 获取学生前置信息
+- `/student/{org_id}/manual` 手动录入学生信息(user)
+- `/student/organizations/{user_id}` 获取该学生挂靠的全部机构(organization)
+- `/student/organization/{org_id}/{user_id}` 学生向机构报名
+- `/student/organization/{org_id}/{user_id}` delete 学生解除挂靠某机构
+
 
 
 ---
@@ -95,3 +111,6 @@
 
 ## 疑问
 1. 抽离common-api包，是不是每个引用该依赖的模块都会将该依赖加入到自己打包后的项目内
+
+## 问王哥
+1. users.addRole(全部在user表中处理)

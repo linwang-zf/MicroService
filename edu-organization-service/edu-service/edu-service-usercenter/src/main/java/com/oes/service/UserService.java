@@ -1,8 +1,12 @@
 package com.oes.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.oes.Exceptions.database.DBOperateException;
+import com.oes.dao.AuthenticatedUsersDao;
+import com.oes.dao.RolesDao;
 import com.oes.dao.UsersDao;
 import com.oes.model.dto.BaseResultDTO;
+import com.oes.model.entity.AuthenticatedUser;
 import com.oes.model.entity.User;
 import com.oes.model.example.UserExample;
 import com.oes.model.query.user.UserRegisterQuery;
@@ -26,6 +30,10 @@ public class UserService {
     private String baseUrl;
     @Resource
     private UsersDao usersDao;
+    @Resource
+    private RolesDao rolesDao;
+    @Resource
+    private AuthenticatedUsersDao authenticatedUsersDao;
 
     /** 用户注册*/
     @Transactional
@@ -127,7 +135,7 @@ public class UserService {
         }
     }
     /***********************************************************/
-    /*检查注册用户信息的合法性*/
+    /** 检查注册用户信息的合法性*/
     private BaseResultDTO checkUserInfo(UserRegisterQuery userInfo) {
         String phone = userInfo.getPhone();
         String mail = userInfo.getMail();
@@ -165,7 +173,7 @@ public class UserService {
         return new BaseResultDTO(true);
     }
 
-    /*检查用户信息的合法性*/
+    /** 检查用户信息的合法性*/
     private BaseResultDTO checkUpdateUserInfo(UserUpdateQuery userInfo) {
         String phone = userInfo.getPhone();
         String mail = userInfo.getMail();
@@ -220,5 +228,26 @@ public class UserService {
         }
 
         return new BaseResultDTO(true);
+    }
+
+    /*******************************************对外暴露*********************/
+    public HttpResult insert(User user, String roleNmae){
+        user.setDefaultRole(rolesDao.queryByName(roleNmae).getRoleid());
+        try {
+            int row = usersDao.insert(user);
+        } catch(Exception e) {
+            log.error("用户注册信息插入数据库失败，信息：{}", user);
+            throw new DBOperateException("用户注册失败");
+        }
+        return HttpResult.ok("注册成功",user);
+    }
+
+    public HttpResult getUserAuthInfoById(Integer userId){
+        User user = usersDao.queryById(userId);
+        AuthenticatedUser auth = authenticatedUsersDao.queryById(userId);
+        JSONObject object = new JSONObject();
+        object.put("user", user);
+        object.put("auth", auth);
+        return HttpResult.ok("获取成功", object);
     }
 }

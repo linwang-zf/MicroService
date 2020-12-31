@@ -250,7 +250,7 @@
             2,
         </if>
         <if test="gender != null">
-            #{gender},
+            #{gender ,typeHandler=com.oes.handlers.GenderTypeHandler},
         </if>
         <if test="profilePhoto != 0">
             #{profilePhoto},

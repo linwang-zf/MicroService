@@ -199,6 +199,13 @@ public class OrganizationsService {
         return organizationVo;
     }
 
+    //对外提供根据id查询机构信息，返回organization类型
+    public Organization getOrgInfoByIdAPI(Long orgId){
+        Organization organization = organizationsDao.queryById(orgId);
+        if (organization == null)
+            throw new OrgNotExistsException("该机构不存在");
+        return organization;
+    }
     /**
      * 机构添加到归档文件
      * @param orgId

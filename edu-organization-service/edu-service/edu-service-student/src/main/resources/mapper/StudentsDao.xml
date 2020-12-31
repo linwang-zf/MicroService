@@ -347,10 +347,6 @@
         where userid = #{userid}
     </update>
 
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from students
-        where userid = #{userid}
-    </delete>
+
 
 </mapper>

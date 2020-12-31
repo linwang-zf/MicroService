@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @Api(tags = {"认证用户"})
@@ -65,5 +66,22 @@ public class AuthUserController {
         } else {
             return HttpResult.error(resultDTO.getMessage());
         }
+    }
+
+
+    /****************************************对外API*******************/
+    /*
+    * 1.courseService
+    * */
+    @GetMapping("/AuthenticatedUser/api/all")
+    public HttpResult getAllAuth(){
+        List<AuthenticatedUser> result = authUserService.getAllAuth();
+        return HttpResult.ok("查询成功",result);
+    }
+
+    @PostMapping("/AuthenticatedUser/api/names")
+    public HttpResult queryNamesById(@RequestBody List<Integer> userIds){
+        List<AuthenticatedUser> result = authUserService.queryNamesById(userIds);
+         return HttpResult.ok("查询成功", result);
     }
 }

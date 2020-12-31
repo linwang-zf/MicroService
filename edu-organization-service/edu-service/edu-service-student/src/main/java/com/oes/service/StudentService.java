@@ -3,13 +3,16 @@ package com.oes.service;
 import com.alibaba.fastjson.JSONObject;
 
 import com.oes.Exceptions.ServiceException;
+import com.oes.Exceptions.database.DBOperateException;
 import com.oes.config.Url;
 import com.oes.constant.enums.BusinessType;
 
 import com.oes.dao.StudentsDao;
+import com.oes.exception.StuNotExistsException;
 import com.oes.model.dto.BaseResultDTO;
 import com.oes.model.entity.CourseCategory;
 import com.oes.model.entity.Student;
+import com.oes.model.vo.student.StudentVo;
 import com.oes.util.http.HttpResult;
 import com.oes.vo.StudentPreInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +20,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -86,5 +91,51 @@ public class StudentService {
         Student student = studentsDao.queryById(user_id);
         if (student == null) throw new ServiceException("该同学不存在");
         return new StudentPreInfo(student);
+    }
+
+
+    /** 补充学生信息
+     * TODO 不实现该接口
+     * */
+    @Transactional
+    public BaseResultDTO addStudent(long user_id, StudentVo studentVo) {
+        Student student = new Student(user_id, studentVo);
+        Student isHaveStu = studentsDao.queryById(user_id);
+
+        BaseResultDTO resultDTO = new BaseResultDTO();
+
+        if (null == isHaveStu) {
+            int row = studentsDao.insert(student);
+            if ((row > 0)) {
+                resultDTO.set(true, "登记成功");
+            } else{
+                log.error("addStudent===id为{}的学生信息登记失败，信息为", user_id, student);
+                throw new DBOperateException("学生信息登记失败");
+            }
+        } else {
+            int row = studentsDao.update(student);
+            if ((row > 0)) {
+                resultDTO.set(true, "登记成功");
+            } else {
+                log.error("addStudent===id为{}的学生信息修改失败，信息为", user_id, student);
+                throw new DBOperateException("学生信息修改失败");
+            }
+        }
+        //TODO 添加addRole全部在user服务中实现
+       // boolean student1 = userService.addRole(usersDao.queryById(student.getUserid()), rolesDao.queryByName("student").getRoleid());
+       // if (!student1) throw new ServiceException("修改用户角色出错");
+        return resultDTO;
+    }
+
+
+    /*
+    * 服务间API
+    * */
+    public Student getStuInfoById(Integer stuId){
+        Student student = studentsDao.queryById(stuId);
+        if (Objects.isNull(student))
+            throw new StuNotExistsException("没有查询到id为" + stuId + "的学生信息");
+        else
+            return student;
     }
 }

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.OrganizationsStudentsDao">
+
+    <resultMap type="com.oes.entity.OrganizationsStudent" id="OrganizationsStudentsMap">
+        <result property="organization" column="organization" jdbcType="OTHER"/>
+        <result property="studentId" column="student_id" jdbcType="OTHER"/>
+        <result property="enrollTime" column="enroll_time" jdbcType="TIMESTAMP"/>
+        <result property="internalId" column="internal_id" jdbcType="OTHER"/>
+        <result property="coursesNumber" column="courses_number" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrganizationsStudentsMap">
+        select
+            organization,
+            student_id,
+            enroll_time,
+            internal_id,
+            courses_number
+        from organizations_students
+        where organization = #{orgId} and student_id = #{stuId}
+    </select>
+
+    <select id="queryByOrgId" resultMap="OrganizationsStudentsMap">
+        select
+            organization,
+            student_id,
+            enroll_time,
+            internal_id,
+            courses_number
+        from organizations_students
+        where organization = #{organization} order by internal_id
+    </select>
+
+    <select id="queryByStuId" resultMap="OrganizationsStudentsMap">
+        select
+            organization,
+            student_id,
+            enroll_time,
+            internal_id,
+            courses_number
+        from organizations_students
+        where student_id = #{studentId}
+    </select>
+
+    <select id="queryByOrgAndInternalId" resultMap="OrganizationsStudentsMap">
+        select
+            organization,
+            student_id,
+            enroll_time,
+            internal_id,
+            courses_number
+        from organizations_students
+        where organization = #{orgId} and internal_id = #{internalId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OrganizationsStudentsMap">
+        select
+            organization,
+            student_id,
+            enroll_time,
+            internal_id,
+            courses_number
+        from organizations_students
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryByEntity" resultMap="OrganizationsStudentsMap">
+        select
+        organization, student_id, enroll_time, internal_id, courses_number
+        from organizations_students
+        <where>
+            <if test="organization != 0">
+                and organization = #{organization}
+            </if>
+            <if test="studentId != 0">
+                and student_id = #{studentId}
+            </if>
+            <if test="enrollTime != null">
+                and enroll_time = #{enrollTime}
+            </if>
+            <if test="internalId != 0">
+                and internal_id = #{internalId}
+            </if>
+            <if test="coursesNumber != 0">
+                and courses_number = #{coursesNumber}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAll" resultMap="OrganizationsStudentsMap">
+        select * from organizations_students
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" useGeneratedKeys="true">
+        insert into organizations_students (organization, student_id, enroll_time, internal_id, courses_number)
+        values (#{organization}, #{studentId}, #{enrollTime}, #{internalId}, #{coursesNumber})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update organizations_students
+        <set>
+            <if test="enrollTime != null">
+                enroll_time = #{enrollTime},
+            </if>
+            <if test="internalId != 0">
+                internal_id = #{internalId},
+            </if>
+            <if test="coursesNumber != null">
+                courses_number = #{coursesNumber},
+            </if>
+        </set>
+        where organization = #{organization} and student_id = #{studentId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from organizations_students
+        where organization = #{orgId} and student_id = #{stuId}
+    </delete>
+
+    <delete id="deleteByOrgId">
+        delete from organizations_students
+        where organization = #{orgId}
+    </delete>
+
+    <delete id="deleteByStuId">
+        delete from organizations_students
+        where student_id = #{stuId}
+    </delete>
+
+
+</mapper>

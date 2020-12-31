@@ -1,6 +1,7 @@
 package com.oes.service;
 
 
+import com.oes.Exceptions.ServiceException;
 import com.oes.Exceptions.database.DBOperateException;
 import com.oes.common.dao.AuthenticatedUsersCommonDao;
 import com.oes.common.dao.CourseCategoryCommonDao;
@@ -90,7 +91,7 @@ public class CoursesService {
         HttpResult result = restTemplate.postForObject(Url.SERVICE_COURSE + "/course/organization/" + orgId, query, HttpResult.class);
         //TODO 错误处理
         if(result.getCode()!= 200 || result.getData() == null){
-            return null;
+            throw new ServiceException("Course-service"+result.getMsg());
         }
         List<CourseVo> courseVoList = (List<CourseVo>) result.getData();
         /*排除该学生的已选课程*/

@@ -3,6 +3,7 @@ package com.oes.controller;
 
 import com.oes.model.dto.BaseResultDTO;
 
+import com.oes.model.entity.User;
 import com.oes.model.query.user.UserRegisterQuery;
 import com.oes.model.query.user.UserUpdateQuery;
 import com.oes.model.vo.user.UserVo;
@@ -89,4 +90,19 @@ public class UserController {
             return HttpResult.error(baseResultDTO.getMessage());
         }
     }
+
+    /*******************对服务间暴露API**********************************/
+    @PostMapping("/user/api/{roleName}")
+    @ApiOperation("用户注册")
+    public HttpResult insert(@RequestBody User user, @PathVariable String roleName) {
+        log("-----------服务间模块调用用户插入-------");
+        return userService.insert(user,roleName);
+    }
+    //courseContrller
+    @GetMapping("/user/auth/api/{userId}")
+    public HttpResult getUserAuthInfo(@PathVariable Integer userId){
+        return userService.getUserAuthInfoById(userId);
+    }
+
+
 }

@@ -1,26 +1,37 @@
 package com.oes.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.oes.Exceptions.database.DBOperateException;
-import com.oes.common.dao.UsersCommonDao;
+import com.oes.config.Url;
 import com.oes.constant.enums.BusinessType;
-import com.oes.dao.*;
-import com.oes.model.entity.*;
+import com.oes.dao.CourseCategoryDao;
+import com.oes.dao.CourseEnrollDao;
+import com.oes.dao.CourseTableDao;
+import com.oes.dao.CoursesDao;
+import com.oes.dto.EnrollCoursesDTO;
 import com.oes.entity.CourseTable;
 import com.oes.model.dto.*;
+import com.oes.model.entity.*;
+import com.oes.model.enums.EnrollCourseStatus;
+import com.oes.model.query.CourseQuery;
+import com.oes.model.vo.CourseVo;
 import com.oes.model.vo.teacher.TeacherVO;
 import com.oes.query.CoursePageQuery;
-import com.oes.model.query.CourseQuery;
 import com.oes.util.CourseRollCallUtil;
 import com.oes.util.CourseUtil;
+import com.oes.util.http.HttpResult;
 import com.oes.vo.CourseByQueryVO;
-import com.oes.model.vo.CourseVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
@@ -44,17 +55,13 @@ public class CoursesService {
     @Resource
     private CoursesDao coursesDao;
     @Resource
-    private CourseCategory courseCategory;
-    @Resource
-    private AuthenticatedUsersDao authenticatedUsersDao;
-    @Resource
-    private OrganizationsDao organizationsDao;
-    @Resource
     private CourseCategoryDao courseCategoryDao;
     @Resource
     private CourseTableDao courseTableDao;
     @Resource
-    private UsersCommonDao usersCommonDao;
+    private CourseEnrollDao courseEnrollDao;
+    @Resource
+    private RestTemplate restTemplate;
 
     /**
      * 通过关键字查找课程信息
@@ -217,7 +224,13 @@ public class CoursesService {
 
         List<Teacher> teachers = coursesDao.queryByOrgId(orgId);
         for (Teacher teacher : teachers) {
-            AuthenticatedUser user = authenticatedUsersDao.queryById(teacher.getUserid());
+            //TODO 测试 后期修改
+            //AuthenticatedUser user = authenticatedUsersDao.queryById(teacher.getUserid());
+            HttpResult<AuthenticatedUser> userResult = restTemplate.exchange
+                    (Url.SERVICE_USERCENTER+"/AuthenticatedUser/"+teacher.getUserid(),HttpMethod.GET,null,
+                            new ParameterizedTypeReference<HttpResult<AuthenticatedUser>>() {
+                    }).getBody();
+            AuthenticatedUser user = userResult.getData();
             if (Objects.nonNull(user)) {
                 Map tea = new HashMap(2);
                 tea.put("id", user.getUserid());
@@ -278,8 +291,13 @@ public class CoursesService {
     /*Courses 转化为 CourseVo*/
     private void transform(List<CourseVo> courseVoList, List<Courses> courses) {
         /*得到所有认证用户，然后过滤得到课程教师信息*/
-        List<AuthenticatedUser> users = authenticatedUsersDao.queryAll();
-
+        //TODO 12.31 测试
+        //List<AuthenticatedUser> users = authenticatedUsersDao.queryAll();
+        HttpResult authResult = restTemplate.exchange
+                (Url.SERVICE_USERCENTER+"/AuthenticatedUser/all", HttpMethod.GET, null,
+                        new ParameterizedTypeReference<HttpResult<List<AuthenticatedUser>>>() {
+                        }).getBody();
+        List<AuthenticatedUser> users = (List<AuthenticatedUser>) authResult.getData();
         for (Courses course : courses) {
             CourseVo courseVo = new CourseVo(course);
             /*课程的教师*/
@@ -331,9 +349,14 @@ public class CoursesService {
             }
             /*课程上课时间*/
             CourseUtil.getCourseTimeList(course, courseVo.getCourseTime());
-
+            //TODO 12.31-2 测试
             /*课程的机构*/
-            String organization = organizationsDao.queryById(course.getOrganizationId()).getName();
+            //String organization = organizationsDao.queryById(course.getOrganizationId()).getName();
+            HttpResult<Organization> result = restTemplate.exchange
+                    (Url.SERVICE_ORGANIZATION+"/organization/api/"+course.getOrganizationId(),HttpMethod.GET,null,
+                            new ParameterizedTypeReference<HttpResult<Organization>>() {
+                            }).getBody();
+            String organization = result.getData().getName();
             courseVo.setOrganization(organization);
 
             /*课程列别*/
@@ -431,7 +454,14 @@ public class CoursesService {
     }
 
     private List<String> transId2Name(List<Integer> ids) {
-        List<AuthenticatedUser> authenticatedUsers = authenticatedUsersDao.queryNamesByIds(ids);
+        //List<AuthenticatedUser> authenticatedUsers = authenticatedUsersDao.queryNamesByIds(ids);
+        //TODO 12.31-2 测试
+        HttpEntity entity = new HttpEntity(ids);
+        HttpResult<List<AuthenticatedUser>> result = restTemplate.exchange
+                (Url.SERVICE_USERCENTER+"/AuthenticatedUser/api/names", HttpMethod.POST,entity,
+                        new ParameterizedTypeReference<HttpResult<List<AuthenticatedUser>>>() {
+                        }).getBody();
+        List<AuthenticatedUser> authenticatedUsers = result.getData();
         HashMap<Integer, String> map = new HashMap<>();
         for (AuthenticatedUser authenticatedUser : authenticatedUsers) {
             map.put(authenticatedUser.getUserid(), authenticatedUser.getName());
@@ -450,9 +480,13 @@ public class CoursesService {
     private void convertTeacherToVO(List<TeacherVO> teachersvo, List<Teacher> teachers) {
         for (Teacher teacher : teachers) {
             long userid = teacher.getUserid();
-            User user = usersCommonDao.queryById(userid);
-            AuthenticatedUser auth = authenticatedUsersDao.queryById(userid);
-
+            //TODO 测试
+            HttpResult<JSONObject> result = restTemplate.exchange
+                    (Url.SERVICE_USERCENTER+"/user/auth/api/"+userid, HttpMethod.GET, null,
+                            new ParameterizedTypeReference<HttpResult<JSONObject>>() {
+                            }).getBody();
+            User user = (User) result.getData().get("user");
+            AuthenticatedUser auth = (AuthenticatedUser) result.getData().get("auth");
             TeacherDTO teacherDTO = new TeacherDTO();
             UserDTO userDTO = new UserDTO();
             AuthUserDTO authUserDTO = new AuthUserDTO();
@@ -469,5 +503,79 @@ public class CoursesService {
         }
     }
 
+    //enroll
+    /** 获取某学生在某机构所有未选修的课程*/
+    public List<Map<String, Object>> getAllUnEnrollCourseByStuId(Integer orgId, Integer stuId) {
+        List<CourseVo> options = getCourseOptionByStuId(orgId, stuId);
+        if (null == options) {
+            return null;
+        }
+        List<Map<String, Object>> result = new ArrayList<>(options.size());
+        for (CourseVo option : options) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("id", option.getCourseId());
+            item.put("name", option.getName());
+            result.add(item);
+        }
+        return result;
+    }
+
+    /**
+     * 查询指定学生在指定机构尚未选修的所有课程
+     *
+     * @param orgId 机构id
+     * @param stuId 学生id
+     * @return
+     */
+    public List<CourseVo> getCourseOptionByStuId(Integer orgId, Integer stuId) {
+        /*查询该学生选修的课程*/
+        List<EnrollCoursesDTO> coursesInfo = courseEnrollDao.getEnrollCoursesInfo(orgId, stuId, EnrollCourseStatus.success.getCode());
+        if (Objects.isNull(coursesInfo))
+            throw new DBOperateException("数据库访问错误");
+
+        List<Integer> courseIds = coursesInfo.stream().map(courseInfo -> (int) courseInfo.getCourseId()).collect(Collectors.toList());
+
+        /*查询出该机构的所有课程*/
+        CourseQuery query = new CourseQuery();
+        query.setPageNum(0);
+        query.setPageSize(0);
+        query.setName("");
+        query.setTypeId(0);
+        query.getLimitTime().add(LocalDate.now().toString());
+
+
+        List<Courses> courses = coursesDao.getCourseByKeywords(query, orgId);
+        if (Objects.isNull(courses))
+            throw new DBOperateException("数据库访问错误");
+        List<CourseVo> courseVoList = new ArrayList<>(courses.size());
+        transform(courseVoList, courses);
+
+        /*排除该学生的已选课程*/
+        List<CourseVo> collect = courseVoList.stream().filter(item -> !courseIds.contains(item.getCourseId())).collect(Collectors.toList());
+
+        return collect;
+    }
+
+    /**
+     * 根据courseId 得到某课程选修学生名单
+     */
+    public List<CourseStudentDTO> getStudentInfoByCourseId(Integer courseId) {
+        List<CourseStudentDTO> stus = coursesDao.getStudentInfoByCourseId(courseId);
+        if (Objects.isNull(stus))
+            throw new DBOperateException("数据获取失败");
+        else
+            return stus;
+    }
+
+    /**
+     * 根据courseId 得到某课程试听学生名单
+     */
+    public List<CourseStudentDTO> getTryStudentInfoByCourseId(Integer courseId) {
+        List<CourseStudentDTO> tryStus = coursesDao.getTryStudentInfoByCourseId(courseId);
+        if (Objects.isNull(tryStus))
+            throw new DBOperateException("数据获取失败");
+        else
+            return tryStus;
+    }
 
 }

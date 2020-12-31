@@ -163,6 +163,12 @@ public class OrganizationController {
         }
     }
 
-
-
+    /***********************************************对外接口**********/
+    @GetMapping("/organization/api/{org_id}")
+    @ApiOperation("获取机构的详细信息")
+    @ApiImplicitParam(name = "org_id", value = "机构id", required = true)
+    public HttpResult getOrgByid(@PathVariable String org_id) {
+        Organization orgInfo = organizationService.getOrgInfoByIdAPI(Long.valueOf(org_id));
+        return HttpResult.ok("查询成功",orgInfo);
+    }
 }

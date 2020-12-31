@@ -2,12 +2,15 @@ package com.oes.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.oes.dto.ManualStudentDTO;
 import com.oes.model.dto.BaseResultDTO;
+import com.oes.model.entity.Student;
 import com.oes.model.enums.Gender;
 import com.oes.model.query.OrganizationQuery;
 import com.oes.model.vo.student.StudentVo;
 import com.oes.query.StudentQuery;
 
+import com.oes.service.OrgStuService;
 import com.oes.service.StudentService;
 import com.oes.util.http.HttpResult;
 import com.oes.vo.OrgStudentVo;
@@ -27,10 +30,8 @@ import java.util.List;
 public class StudentController {
   @Resource
   private StudentService studentService;
-
-
-
-
+  @Resource
+  private OrgStuService orgStuService;
 
     @GetMapping("/student/{stuId}")
     @ApiOperation("通过id获取学生信息")
@@ -50,7 +51,8 @@ public class StudentController {
         return HttpResult.ok("查询成功", studentPreInfo);
     }
 
-   /* @PostMapping("/student/{user_id}")
+    //TODO 工作量问题
+    @PostMapping("/student/{user_id}")
     @ApiOperation("学生信息补充登记")
     public HttpResult addStudent(@PathVariable String user_id, @RequestBody StudentVo student) throws Exception {
         BaseResultDTO resultDTO = studentService.addStudent(Long.valueOf(user_id), student);
@@ -61,7 +63,7 @@ public class StudentController {
         }
     }
 
-*//*    @PostMapping("/student/{org_id}/manual")
+    @PostMapping("/student/{org_id}/manual")
     @ApiOperation("手动录入学生信息")
     public HttpResult addStudentManual(@PathVariable String org_id, @RequestBody ManualStudentDTO studentDTO) {
         long id = orgStuService.addStudentManual(Long.valueOf(org_id), studentDTO);
@@ -70,31 +72,11 @@ public class StudentController {
             object.put("userId", id);
             return HttpResult.ok("添加成功", object);
         } else return HttpResult.error("添加失败");
-    }*//*
-
-    @DeleteMapping("/student/{user_id}")
-    @ApiOperation("学生注销账号")
-    public HttpResult deleteStudent(@PathVariable String user_id) {
-        boolean b = studentService.deleteStudent(Long.valueOf(user_id));
-        if (b) return HttpResult.ok("删除成功", true);
-        else return HttpResult.error("删除失败");
     }
 
-    @GetMapping("/student/organization/{org_id}")
-    @ApiOperation("获取一个机构的学生(可添加删选条件,当条件为空时，即获取全部学生)")
-    //FIXME 该接口需要修改
-    public HttpResult getAllStuById(@PathVariable String org_id, @ApiParam("姓名") @RequestParam(required = false) String name,
-                                    @ApiParam("性别") @RequestParam(required = false) Gender gender,
-                                    @ApiParam("起始出生年月") @RequestParam(required = false) Date startBirth,
-                                    @ApiParam("终止出生年月") @RequestParam(required = false) Date endBirth,
-                                    @ApiParam("起始报名时间") @RequestParam(required = false) Timestamp startEnrollTime,
-                                    @ApiParam("终止报名时间") @RequestParam(required = false) Timestamp endEnrollTime,
-                                    @ApiParam("手机号") @RequestParam(required = false) String phone) {
-        List<OrgStudentVo> students = orgStuService.getStudents(Long.valueOf(org_id), name, gender, startBirth, endBirth, startEnrollTime, endEnrollTime, phone);
-        if (students == null) return HttpResult.error();
-        else if (students.isEmpty()) return HttpResult.ok("机构暂无学生", students);
-        else return HttpResult.ok("查询成功", students);
-    }
+
+
+
 
     @GetMapping("/student/organization/{org_id}/{user_id}")
     @ApiOperation("学生向机构报名")
@@ -124,26 +106,18 @@ public class StudentController {
         else return HttpResult.ok("查询成功", allOrg);
     }
 
-    @PostMapping("/student/unEnroll/organizations/{user_id}")
-    @ApiOperation("获取该学生未挂靠的全部机构")
-    public HttpResult getUnEnrollOrgByStu(@PathVariable int user_id, @RequestBody OrganizationQuery query) {
-        BaseResultDTO resultDTO = orgStuService.getUnEnrollOrgByStu(user_id, query);
-        if (resultDTO.isSuccess()) {
-            return HttpResult.ok(resultDTO.getMessage(), resultDTO.getData());
+
+    /*********************************** 对外暴露API**********/
+    @GetMapping("/student/api/{stuId}")
+    @ApiOperation("对服务间暴露的API，通过stuId获取student信息")
+    public HttpResult getStuInfoById(@PathVariable Integer stuId){
+        Student student = studentService.getStuInfoById(stuId);
+        if (student != null) {
+            return HttpResult.ok("查询成功", student);
         } else {
-            return HttpResult.error(resultDTO.getMessage());
+            return HttpResult.error("查找失败");
         }
     }
 
-    @PostMapping("/platAdmin/QureyStudent")
-    @ApiOperation("平台管理员查询学生")
-    public HttpResult queryStudents(@RequestBody StudentQuery studentQuery){
-        BaseResultDTO baseResultDTO = studentService.queryStudents(studentQuery);
-        if(baseResultDTO.isSuccess()){
-            return HttpResult.ok(baseResultDTO.getMessage(),baseResultDTO.getData());
-        }else {
-            return HttpResult.error(baseResultDTO.getMessage());
-        }
-    }
-*/
+
 }

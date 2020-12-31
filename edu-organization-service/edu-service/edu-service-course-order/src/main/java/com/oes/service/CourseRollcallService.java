@@ -2,17 +2,23 @@ package com.oes.service;
 
 
 import com.oes.Exceptions.database.DBOperateException;
+import com.oes.config.Url;
 import com.oes.constant.enums.BusinessType;
+import com.oes.exception.CourseNotExistsException;
 import com.oes.model.dto.BaseResultDTO;
 import com.oes.model.dto.CourseStudentDTO;
 import com.oes.model.entity.Courses;
 import com.oes.model.entity.Student;
 import com.oes.util.course.CourseUtil;
 import com.oes.util.datatime.DateTimeUtil;
+import com.oes.util.http.HttpResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -34,6 +40,8 @@ public class CourseRollcallService {
     private CoursesDao coursesDao;
     private StudentsDao studentsDao;
     private CourseTableDao courseTableDao;
+    @Resource
+    private RestTemplate restTemplate;
 
 
 
@@ -51,7 +59,12 @@ public class CourseRollcallService {
 
         /*得到当前是第几次课*/
         Courses course = coursesDao.getCourseByKey(courseId);   //该课程信息
-        Student student = studentsDao.queryById(stuId);
+        HttpResult<Student> stuResult = restTemplate.exchange
+                (Url.SERVICE_STUDENT+"/student/api/"+stuId, HttpMethod.GET, null,
+                        new ParameterizedTypeReference<HttpResult<Student>>() {
+                }).getBody();
+
+        Student student = stuResult.getData();
 
         if (Objects.isNull(course))
             throw new CourseNotExistsException("没有查询到id为" + courseId + "的课程信息");

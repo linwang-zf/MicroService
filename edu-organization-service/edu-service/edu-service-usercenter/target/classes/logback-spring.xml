@@ -8,8 +8,10 @@
 
     <!--mybatis log configure-->
     <logger name="com.oes.dao.UsersDao" level="trace"/>
+    <logger name="com.oes.dao.AuthenticatedUsersDao" level="trace"/>
+    <logger name="com.oes.dao.PicturesDao" level="trace"/>
 
-    <root level="info">
-        <appender-ref ref="CONSOLE" />
+    <root level="debug">
+        <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>
