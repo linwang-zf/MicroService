@@ -15,13 +15,13 @@
         <module name="edu-service-course-order" />
         <module name="edu-service-course" />
         <module name="edu-service-usercenter" />
-        <module name="edu-service-course-oder" />
         <module name="edu-service-bind" />
         <module name="edu-eureka" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="edu-service" target="1.8" />
+      <module name="edu-service-course-oder" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

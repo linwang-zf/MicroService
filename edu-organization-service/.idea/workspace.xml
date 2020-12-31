@@ -78,7 +78,7 @@
       <recent name="E:\gitRepository\edu-organization-service\edu-service\edu-service-course-oder\src\main\resources\mapper" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CourseMain">
+  <component name="RunManager" selected="Application.EurekaMain">
     <configuration name="CourseMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.oes.CourseMain" />
       <module name="edu-service-course" />
@@ -146,8 +146,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CourseMain" />
         <item itemvalue="Application.EurekaMain" />
+        <item itemvalue="Application.CourseMain" />
         <item itemvalue="Application.StudentMain" />
         <item itemvalue="Application.SsoMain" />
         <item itemvalue="Application.OrganizationMain" />
@@ -204,22 +204,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="270" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609403208345" />
-    <state width="1877" height="259" key="GridCell.Tab.0.bottom" timestamp="1609395272625">
+    <state width="1877" height="259" key="GridCell.Tab.0.bottom" timestamp="1609404607311">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="259" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609395272625" />
-    <state width="1877" height="259" key="GridCell.Tab.0.center" timestamp="1609395272625">
+    <state width="1877" height="259" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609404607311" />
+    <state width="1877" height="259" key="GridCell.Tab.0.center" timestamp="1609404607311">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="259" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609395272625" />
-    <state width="1877" height="259" key="GridCell.Tab.0.left" timestamp="1609395272625">
+    <state width="1877" height="259" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609404607311" />
+    <state width="1877" height="259" key="GridCell.Tab.0.left" timestamp="1609404607311">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="259" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609395272625" />
-    <state width="1877" height="259" key="GridCell.Tab.0.right" timestamp="1609395272625">
+    <state width="1877" height="259" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609404607311" />
+    <state width="1877" height="259" key="GridCell.Tab.0.right" timestamp="1609404607311">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="259" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609395272625" />
+    <state width="1877" height="259" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-143.1920.1040@0.0.1920.1040" timestamp="1609404607311" />
     <state width="1877" height="312" key="GridCell.Tab.1.bottom" timestamp="1609391707307">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

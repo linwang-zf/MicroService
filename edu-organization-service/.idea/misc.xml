@@ -10,6 +10,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/edu-service-course/pom.xml" />
+        <option value="$PROJECT_DIR$/edu-service/edu-service-course-order/pom.xml" />
         <option value="$PROJECT_DIR$/edu-service/pom.xml" />
       </set>
     </option>

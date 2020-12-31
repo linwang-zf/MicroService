@@ -17,7 +17,6 @@
         <module>edu-service-course</module>
         <module>edu-service-bind</module>
         <module>edu-service-organization</module>
-        <module>edu-service-course-order</module>
         <module>edu-service-student</module>
     </modules>
 
