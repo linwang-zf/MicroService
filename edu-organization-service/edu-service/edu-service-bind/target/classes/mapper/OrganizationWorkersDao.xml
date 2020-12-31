@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.OrganizationWorkersDao">
+
+    <resultMap type="com.oes.entity.OrganizationWorker" id="OrganizationWorkersMap">
+        <result property="userid" column="userid" jdbcType="OTHER"/>
+        <result property="organizationId" column="organization_id" jdbcType="OTHER"/>
+        <result property="role" column="role" jdbcType="OTHER"/>
+        <result property="roleSubLevel" column="role_sub_level" jdbcType="OTHER"/>
+        <result property="entryTime" column="entry_time" jdbcType="DATE" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler"/>
+        <result property="standbyPhone" column="standby_phone" jdbcType="VARCHAR"/>
+        <result property="relativeName" column="relative_name" jdbcType="VARCHAR"/>
+        <result property="relationship" column="relationship" jdbcType="VARCHAR"/>
+        <result property="relativePhone" column="relative_phone" jdbcType="VARCHAR"/>
+        <result property="wageCardId" column="wage_card_id" jdbcType="OTHER"/>
+        <result property="checked" column="checked" jdbcType="OTHER"/>
+        <result property="fail_reason" column="fail_reason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column">
+        userid, organization_id, role, role_sub_level, entry_time, standby_phone, relative_name, relationship, relative_phone, wage_card_id,
+        checked, fail_reason
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrganizationWorkersMap">
+        select
+            <include refid="Base_Column"/>
+        from organization_workers
+        where userid = #{userId} and role = #{roleId}
+    </select>
+
+    <select id="queryByUserId" resultMap="OrganizationWorkersMap">
+        select
+        <include refid="Base_Column"/>
+        from organization_workers
+        where userid = #{userId}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update organization_workers
+        <set>
+            <if test="organizationId != 0">
+                organization_id = #{organizationId},
+            </if>
+            <if test="roleSubLevel != 0">
+                role_sub_level = #{roleSubLevel},
+            </if>
+            <if test="standbyPhone != null and standbyPhone != ''">
+                standby_phone = #{standbyPhone},
+            </if>
+            <if test="relativeName != null and relativeName != ''">
+                relative_name = #{relativeName},
+            </if>
+            <if test="relationship != null and relationship != ''">
+                relationship = #{relationship},
+            </if>
+            <if test="relativePhone != null and relativePhone != ''">
+                relative_phone = #{relativePhone},
+            </if>
+            <if test="wageCardId != 0">
+                wage_card_id = #{wageCardId},
+            </if>
+            <if test="checked != 0">
+                checked = #{checked},
+            </if>
+            <if test="fail_reason != null and fail_reason != ''">
+                fail_reason = #{fail_reason},
+            </if>
+        </set>
+        where userid = #{userid} and role = #{role}
+    </update>
+
+
+
+</mapper>

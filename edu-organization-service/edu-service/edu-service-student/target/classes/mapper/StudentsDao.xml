@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.StudentsDao">
+
+    <resultMap type="com.oes.model.entity.Student" id="StudentsMap">
+        <result property="userid" column="userid" jdbcType="OTHER"/>
+        <result property="parentId" column="parent_id" jdbcType="OTHER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="school" column="school" jdbcType="VARCHAR"/>
+        <result property="grade" column="grade" jdbcType="OTHER"/>
+        <result property="qq" column="qq" jdbcType="VARCHAR"/>
+        <result property="weixin" column="weixin" jdbcType="VARCHAR"/>
+        <result property="secondTel" column="second_tel" jdbcType="VARCHAR"/>
+        <result property="org_added" column="org_added" jdbcType="OTHER"/>
+        <result property="owner_id" column="owner_id" jdbcType="OTHER"/>
+        <result property="courseType1Id" column="course_type1_id" jdbcType="OTHER"/>
+        <result property="courseType2Id" column="course_type2_id" jdbcType="OTHER"/>
+        <result property="courseType3Id" column="course_type3_id" jdbcType="OTHER"/>
+        <result property="courseType4Id" column="course_type4_id" jdbcType="OTHER"/>
+        <result property="courseType5Id" column="course_type5_id" jdbcType="OTHER"/>
+    </resultMap>
+    <resultMap id="OrgInfoMap" type="com.oes.model.info.OrgInfo">
+        <result property="orgName" column="org_name"/>
+        <result property="contactName" column="contact_name"/>
+        <result property="contactPhone" column="contact_phone"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="district" column="district"/>
+        <result property="address" column="address"/>
+    </resultMap>
+    <!--<resultMap id="StudentInfo" type="com.oes.model.info.StudentInfo">
+        <association property="orgInfo" javaType="com.oes.model.info.OrgInfo" resultMap="OrgInfoMap"/>
+        <association property="user" javaType="com.oes.model.entity.User"
+                     resultMap="com.oes.core.user.dao.UsersDao.UsersMap"/>
+        <association property="student" javaType="com.oes.model.entity.Student" resultMap="StudentsMap"/>
+    </resultMap>-->
+    <!--<select id="queryStudents" resultMap="StudentInfo">
+        SELECT s.*, u.*, o.name as org_name,o.contact_name,o.contact_phone,o.province,o.city,o.district,o.address FROM students s
+        LEFT JOIN organizations o ON o.org_id=s.owner_id
+        LEFT JOIN users u ON s.userid = u.userid
+        where 1=1
+            <if test="query != null and query != ''">
+                and (s.name like "%"#{query}"%"
+                or u.userid like "%"#{query}"%"
+                or s.school like "%"#{query}"%"
+                or o.name like "%"#{query}"%")
+            </if>
+            <if test="grade != null and grade != 0 and grade != -2">
+                and grade = #{grade}
+            </if>
+            <if test="grade != null and grade == -2">
+                and grade > 12
+            </if>
+            <if test="pageNum != null and pageNum != 0 and pageSize != null and pageSize != 0">
+                order by name limit ${pageSize * (pageNum-1)},#{pageSize}
+            </if>
+    </select>-->
+    <!--查询单个-->
+    <select id="queryById" resultMap="StudentsMap">
+        select *
+        from students
+        where userid = #{userid}
+    </select>
+
+    <select id="queryByParentId" resultMap="StudentsMap">
+        select *
+        from students
+        where parent_id = #{parentId}
+    </select>
+
+    <select id="queryByName" resultMap="StudentsMap">
+        select *
+        from students
+        where name = #{name}
+    </select>
+
+    <select id="queryByType" resultMap="StudentsMap">
+        select *
+        from students
+        where type = #{type}
+    </select>
+
+    <select id="queryBySchool" resultMap="StudentsMap">
+        select *
+        from students
+        where school = #{school}
+    </select>
+
+    <select id="queryByGrade" resultMap="StudentsMap">
+        select *
+        from students
+        where grade = #{grade}
+    </select>
+
+    <select id="queryByCourseType" resultMap="StudentsMap">
+        select *
+        from students
+        where course_type1_id = #{typeId} or course_type2_id = #{typeId} or course_type3_id = #{typeId} or
+              course_type4_id = #{typeId} or course_type5_id = #{typeId}
+    </select>
+
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="StudentsMap">
+        select *
+        from students
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryByEntity" resultMap="StudentsMap">
+        select
+        *
+        from students
+        <where>
+            <if test="userid != 0">
+                and userid = #{userid}
+            </if>
+            <if test="parentId != 0">
+                and parent_id = #{parentId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="school != null and school != ''">
+                and school = #{school}
+            </if>
+            <if test="grade != 0">
+                and grade = #{grade}
+            </if>
+            <if test="qq != null and qq != ''">
+                and qq = #{qq}
+            </if>
+            <if test="weixin != null and weixin != ''">
+                and weixin = #{weixin}
+            </if>
+            <if test="courseType1Id != 0">
+                and course_type1_id = #{courseType1Id}
+            </if>
+            <if test="courseType2Id != 0">
+                and course_type2_id = #{courseType2Id}
+            </if>
+            <if test="courseType3Id != 0">
+                and course_type3_id = #{courseType3Id}
+            </if>
+            <if test="courseType4Id != 0">
+                and course_type4_id = #{courseType4Id}
+            </if>
+            <if test="courseType5Id != 0">
+                and course_type5_id = #{courseType5Id}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAll" resultMap="StudentsMap">
+        select *
+        from students
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into students
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null and userid != 0">
+                userid,
+            </if>
+            <if test="parentId != null and parentId != 0">
+                parent_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="type != null and type != ''">
+                type,
+            </if>
+            <if test="school != null and school != ''">
+                school,
+            </if>
+            <if test="grade != null and grade != 0">
+                grade,
+            </if>
+            <if test="qq != null and qq != ''">
+                qq,
+            </if>
+            <if test="weixin != null and weixin != ''">
+                weixin,
+            </if>
+            <if test="courseType1Id != null and courseType1Id != 0">
+                course_type1_id,
+            </if>
+            <if test="courseType2Id != null and courseType2Id != 0">
+                course_type2_id,
+            </if>
+            <if test="courseType3Id != null and courseType3Id != 0">
+                course_type3_id,
+            </if>
+            <if test="courseType4Id != null and courseType4Id != 0">
+                course_type4_id,
+            </if>
+            <if test="courseType5Id != null and courseType5Id != 0">
+                course_type5_id,
+            </if>
+            <if test="secondTel != null and secondTel != ''">
+                second_tel,
+            </if>
+            <if test="org_added != null">
+                org_added,
+            </if>
+            <if test="owner_id != null and owner_id != 0">
+                owner_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null and userid != 0">
+                #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null and parentId != 0">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null and type != ''">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="school != null and school != ''">
+                #{school,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null and grade != 0">
+                #{grade,jdbcType=TINYINT},
+            </if>
+            <if test="qq != null and qq != ''">
+                #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="weixin != null and weixin != ''">
+                #{weixin,jdbcType=VARCHAR},
+            </if>
+            <if test="courseType1Id != null and courseType1Id != 0">
+                #{courseType1Id,jdbcType=SMALLINT},
+            </if>
+            <if test="courseType2Id != null and courseType2Id != 0">
+                #{courseType2Id,jdbcType=SMALLINT},
+            </if>
+            <if test="courseType3Id != null  and courseType3Id != 0">
+                #{courseType3Id,jdbcType=SMALLINT},
+            </if>
+            <if test="courseType4Id != null  and courseType4Id != 0">
+                #{courseType4Id,jdbcType=SMALLINT},
+            </if>
+            <if test="courseType5Id != null  and courseType5Id != 0">
+                #{courseType5Id,jdbcType=SMALLINT},
+            </if>
+            <if test="secondTel != null and secondTel != ''">
+                #{secondTel,jdbcType=VARCHAR},
+            </if>
+            <if test="org_added != null">
+                #{org_added,jdbcType=TINYINT},
+            </if>
+            <if test="owner_id != null and owner_id != 0">
+                #{owner_id,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update students
+        <set>
+            <if test="parentId != 0">
+                parent_id = #{parentId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="school != null and school != ''">
+                school = #{school},
+            </if>
+            <if test="grade != 0">
+                grade = #{grade},
+            </if>
+            <if test="qq != null and qq != ''">
+                qq = #{qq},
+            </if>
+            <if test="weixin != null and weixin != ''">
+                weixin = #{weixin},
+            </if>
+            <if test="secondTel != null and secondTel !=''">
+                second_tel = #{secondTel},
+            </if>
+            <if test="org_added != null">
+                org_added = #{org_added},
+            </if>
+            <if test="owner_id != 0 and owner_id != 1">
+                owner_id = #{owner_id},
+            </if>
+            <choose>
+                <when test="courseType1Id == 0">
+                    course_type1_id = null,
+                </when>
+                <otherwise>
+                    course_type1_id = #{courseType1Id},
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="courseType2Id == 0">
+                    course_type2_id = null,
+                </when>
+                <otherwise>
+                    course_type2_id = #{courseType2Id},
+                </otherwise>
+            </choose>
+
+            <choose>
+                <when test="courseType3Id == 0">
+                    course_type3_id = null,
+                </when>
+                <otherwise>
+                    course_type3_id = #{courseType3Id},
+                </otherwise>
+            </choose>
+
+            <choose>
+                <when test="courseType4Id == 0">
+                    course_type4_id = null,
+                </when>
+                <otherwise>
+                    course_type4_id = #{courseType4Id},
+                </otherwise>
+            </choose>
+
+            <choose>
+                <when test="courseType5Id == 0">
+                    course_type5_id = null,
+                </when>
+                <otherwise>
+                    course_type5_id = #{courseType5Id},
+                </otherwise>
+            </choose>
+        </set>
+        where userid = #{userid}
+    </update>
+
+
+
+</mapper>

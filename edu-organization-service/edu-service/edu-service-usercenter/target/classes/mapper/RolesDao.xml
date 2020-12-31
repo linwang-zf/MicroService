@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oes.dao.RolesDao">
+
+    <resultMap type="com.oes.model.entity.Role" id="RolesMap">
+        <id property="roleid" column="roleid" jdbcType="TINYINT" />
+        <result property="roleName" column="role_name" jdbcType="VARCHAR" />
+        <result property="roleTableName" column="role_table_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RolesMap">
+        select
+          roleid, role_name, role_table_name
+        from roles
+        where roleid = #{roleid}
+    </select>
+
+    <select id="queryByName" resultMap="RolesMap">
+        select
+            roleid, role_name, role_table_name
+        from roles
+        where role_name=#{name}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="RolesMap">
+        select
+          roleid, role_name, role_table_name
+        from roles
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="queryByEntity" resultMap="RolesMap">
+        select
+        roleid, role_name, role_table_name
+        from roles
+        <where>
+            <if test="roleid != 0">
+                and roleid = #{roleid}
+            </if>
+            <if test="roleName != null and roleName != ''">
+                and role_name = #{roleName}
+            </if>
+            <if test="roleTableName != null and roleTableName != ''">
+                and role_table_name = #{roleTableName}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="RolesMap">
+        select
+            roleid, role_name, role_table_name
+        from roles
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="roleid" useGeneratedKeys="true">
+        insert into roles(role_name, role_table_name)
+        values (#{roleName}, #{roleTableName})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update roles
+        <set>
+            <if test="roleName != null and roleName != ''">
+                role_name = #{roleName},
+            </if>
+            <if test="roleTableName != null and roleTableName != ''">
+                role_table_name = #{roleTableName},
+            </if>
+        </set>
+        where roleid = #{roleid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from roles where roleid = #{roleid}
+    </delete>
+
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <properties>
+        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/OES?serverTimezone=UTC&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="Xkj_13011301"/>
+    </properties>
+
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <typeHandlers>
+        <package name="com.oes.handlers"/>
+    </typeHandlers>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--<mappers>
+        <mapper resource="mapper/UsersDao.xml"/>
+        <mapper resource="mapper/RolesDao.xml"/>
+        <mapper resource="mapper/PicturesDao.xml"/>
+        <mapper resource="mapper/TeachersDao.xml"/>
+        <mapper resource="mapper/OrganizationCoursesDao.xml"/>
+        <mapper resource="mapper/CourseCategoryDao.xml"/>
+        <mapper resource="mapper/AuthenticatedUsersDao.xml"/>
+        <mapper resource="mapper/OrganizationCategoryDao.xml"/>
+        <mapper resource="mapper/OrganizationPicturesDao.xml"/>
+        <mapper resource="mapper/OrganizationsStudentsDao.xml"/>
+        <mapper resource="mapper/OrganizationWorkersDao.xml"/>
+        <mapper resource="mapper/OrganizationsDao.xml"/>
+        <mapper resource="mapper/StudentsDao.xml"/>
+    </mappers>-->
+</configuration>
