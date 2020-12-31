@@ -18,7 +18,6 @@
         <module>edu-gateway</module>
         <module>edu-eureka</module>
         <module>edu-service</module>
-        <module>edi-service/edu-service-course-order</module>
 
 
     </modules>
