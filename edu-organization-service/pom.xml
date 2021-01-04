@@ -15,8 +15,6 @@
     <modules>
         <module>edu-api-commons</module>
         <!-- <module>oes-service-sso</module>-->
-        <module>edu-gateway</module>
-        <module>edu-eureka</module>
         <module>edu-service</module>
 
 

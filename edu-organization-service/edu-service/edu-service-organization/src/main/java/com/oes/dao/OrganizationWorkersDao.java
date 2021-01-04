@@ -1,6 +1,5 @@
 package com.oes.dao;
 
-import com.oes.model.entity.OrganizationWorker;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

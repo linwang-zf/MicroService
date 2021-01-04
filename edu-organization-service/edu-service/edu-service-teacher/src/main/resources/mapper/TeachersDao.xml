@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.oes.core.teacher.dao.TeachersDao">
+<mapper namespace="com.oes.dao.TeachersDao">
 
     <resultMap type="com.oes.model.entity.Teacher" id="TeachersMap">
         <result property="userid" column="userid" jdbcType="INTEGER"/>
@@ -34,15 +34,6 @@
         <result property="fullTime" column="full_time" jdbcType="TINYINT"/>
         <result property="checked" column="checked" jdbcType="OTHER"/>
         <result property="fail_reason" column="fail_reason" jdbcType="VARCHAR"/>
-    </resultMap>
-    <resultMap id="TeacherInfo" type="com.oes.model.info.TeacherInfo">
-        <association property="user" javaType="com.oes.model.entity.User"
-                     resultMap="com.oes.core.user.dao.UsersDao.UsersMap"/>
-        <association property="authenticatedUser" javaType="com.oes.model.entity.AuthenticatedUser"
-                     resultMap="com.oes.core.user.dao.AuthenticatedUsersDao.AuthenticatedUsersMap"/>
-        <association property="teacher" javaType="com.oes.model.entity.Teacher" resultMap="TeachersMap"/>
-        <association property="orgInfo" javaType="com.oes.model.info.OrgInfo"
-                     resultMap="com.oes.core.student.dao.StudentsDao.OrgInfoMap"/>
     </resultMap>
 
     <sql id="Base_Column">
@@ -220,31 +211,9 @@
         <include refid="Base_Column"></include>
         from teachers
     </select>
-    <select id="queryTeachers" resultMap="TeacherInfo">
-        select t.*, a.userid, a.idcard, a.idcard_photo, a.name, a.province, a.city, a.district, a.qq, a.weixin, u.*,
-        o.name as org_name,o.contact_name,o.contact_phone,o.province,o.city,o.district,o.address FROM teachers t
-        LEFT JOIN organizations o ON o.org_id=t.organization_id
-        LEFT JOIN users u ON t.userid = u.userid
-        LEFT JOIN authenticated_users a ON t.userid = a.userid
-        where 1=1
-        <if test="query != null and query != ''">
-            and (a.name like "%"#{query}"%"
-            or u.userid like "%"#{query}"%"
-            or t.grad_school like "%"#{query}"%"
-            or o.name like "%"#{query}"%")
-        </if>
-        <if test="education != null and education != ''">
-            and t.education=#{education}
-        </if>
-        <if test="degree != null and degree != ''">
-            and t.degree=#{degree}
-        </if>
-        <if test="pageNum != null and pageNum != 0 and pageSize != null and pageSize != 0">
-            order by t.userid limit ${pageSize * (pageNum-1)},#{pageSize}
-        </if>
-    </select>
 
-    <select id="queryTeacherBriefVO" resultType="com.oes.model.vo.TeacherBriefVO">
+
+    <select id="queryTeacherBriefVO" resultType="com.oes.vo.TeacherBriefVO">
         SELECT t.userid,name,adver_photo as adverPhoto,brief_intro as briefIntro
         FROM teachers t
         LEFT JOIN authenticated_users a

@@ -105,11 +105,20 @@ public class UserController {
         return userService.getUserAuthInfoById(userId);
     }
 
-    @PostMapping("/user/api/role")
+    @PostMapping("/user/api/roleName")
     public boolean addRoles(@RequestBody Integer userId, @RequestBody String roleName){
         return userService.addRoles(userId,roleName);
     }
 
+    @GetMapping("user/api/roleId")
+    public boolean addRoleById(@PathVariable Integer userId, @PathVariable Integer roleId){
+        return userService.addRole(userId,roleId);
+    }
+
+    @DeleteMapping("user/api/roleName")
+    public HttpResult removeRole(@PathVariable Integer userId, @PathVariable String roleName){
+        return userService.removeRole(userId,roleName);
+    }
 
 
 

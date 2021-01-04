@@ -14,7 +14,6 @@ import com.oes.model.dto.BaseResultDTO;
 import com.oes.model.dto.OrganizationTeacherDTO;
 import com.oes.model.entity.AuthenticatedUser;
 import com.oes.model.entity.Organization;
-import com.oes.model.entity.OrganizationWorker;
 import com.oes.model.entity.Role;
 import com.oes.model.enums.RegistState;
 import com.oes.model.example.OrganizationExample;

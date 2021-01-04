@@ -1,11 +1,11 @@
 package com.oes.dao;
 
-import com.oes.info.TeacherInfo;
+
 import com.oes.model.entity.Teacher;
-import com.oes.query.TeacherQuery;
 import com.oes.vo.TeacherBriefVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-03-27 14:40:14
  */
-@Repository
+@Mapper
 public interface TeachersDao {
 
     /**
@@ -115,12 +115,7 @@ public interface TeachersDao {
      */
     int deleteById(long userid);
 
-    /**
-     * 过滤分页查询教师
-     * @param teacherQuery
-     * @return
-     */
-    List<TeacherInfo> queryTeachers(TeacherQuery teacherQuery);
+
 
     List<TeacherBriefVO> queryTeacherBriefVO(List<Integer> teacherIds);
 
