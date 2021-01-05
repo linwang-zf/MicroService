@@ -13,6 +13,20 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
+        - id: test
+          uri: lb://edu-service-usercenter
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
+
+        - id: test1
+          uri: lb://edu-authentication
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+
         - id: edu-authentication
           uri: lb://edu-authentication  # 后端服务名
           predicates:
@@ -84,6 +98,18 @@ spring:
           uri: lb://edu-service-payment
           predicates:
             - Path=//transaction/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:9401/rsa/publicKey' #配置RSA的公钥访问地址
+
+  redis:
+    database: 0
+    port: 8085
+    host: 139.129.101.91
+    password: Xkj_13011301
+    timeout: 2000
 
 management:
   endpoints:
@@ -102,3 +128,9 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:7001/eureka
 #      defaultZone: http://eureka7001.com:7001/eureka, http://eureka7002.com:7002/eureka #集群版
+
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - "/actuator/**"
+      - "/auth/oauth/token"

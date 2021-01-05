@@ -2,6 +2,8 @@ package com.oes.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.oes.holder.LoginUserHolder;
+import com.oes.holder.UserDTO;
 import com.oes.model.dto.BaseResultDTO;
 
 import com.oes.model.entity.User;
@@ -16,6 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -124,5 +127,17 @@ public class UserController {
     }
 
 
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello World.";
+    }
+
+    @Autowired
+    private LoginUserHolder loginUserHolder;
+
+    @GetMapping("/user/currentUser")
+    public UserDTO currentUser() {
+        return loginUserHolder.getCurrentUser();
+    }
 
 }
