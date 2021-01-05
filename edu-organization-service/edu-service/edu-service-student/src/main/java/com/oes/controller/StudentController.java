@@ -61,7 +61,7 @@ public class StudentController {
     }
 
     @PostMapping("/student/{org_id}/manual")
-    @HystrixCommand(fallbackMethod = "error")
+    @HystrixCommand
     @ApiOperation("手动录入学生信息")
     public HttpResult addStudentManual(@PathVariable String org_id, @RequestBody ManualStudentDTO studentDTO) {
         long id = orgStuService.addStudentManual(Long.valueOf(org_id), studentDTO);
