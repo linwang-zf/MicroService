@@ -4,30 +4,20 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.oes.dto.ManualStudentDTO;
 import com.oes.model.dto.BaseResultDTO;
 import com.oes.model.entity.Student;
-import com.oes.model.enums.Gender;
-import com.oes.model.query.OrganizationQuery;
 import com.oes.model.vo.student.StudentVo;
-import com.oes.query.StudentQuery;
-
 import com.oes.service.OrgStuService;
 import com.oes.service.StudentService;
 import com.oes.util.http.HttpResult;
 import com.oes.util.http.HttpStatus;
-import com.oes.vo.OrgStudentVo;
 import com.oes.vo.StudentPreInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
 
 @RestController
 @DefaultProperties(defaultFallback = "Global_FallbackMethod")
@@ -71,7 +61,7 @@ public class StudentController {
     }
 
     @PostMapping("/student/{org_id}/manual")
-    //@HystrixCommand(fallbackMethod = "error")
+    @HystrixCommand(fallbackMethod = "error")
     @ApiOperation("手动录入学生信息")
     public HttpResult addStudentManual(@PathVariable String org_id, @RequestBody ManualStudentDTO studentDTO) {
         long id = orgStuService.addStudentManual(Long.valueOf(org_id), studentDTO);
