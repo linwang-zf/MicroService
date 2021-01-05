@@ -2,6 +2,9 @@ package com.oes.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.oes.dto.ManualStudentDTO;
 import com.oes.model.dto.BaseResultDTO;
 import com.oes.model.entity.Student;
@@ -13,6 +16,7 @@ import com.oes.query.StudentQuery;
 import com.oes.service.OrgStuService;
 import com.oes.service.StudentService;
 import com.oes.util.http.HttpResult;
+import com.oes.util.http.HttpStatus;
 import com.oes.vo.OrgStudentVo;
 import com.oes.vo.StudentPreInfo;
 import io.swagger.annotations.Api;
@@ -26,6 +30,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
+@DefaultProperties(defaultFallback = "Global_FallbackMethod")
 @Api(tags = {"学生管理"})
 public class StudentController {
   @Resource
@@ -34,6 +39,7 @@ public class StudentController {
   private OrgStuService orgStuService;
 
     @GetMapping("/student/{stuId}")
+    @HystrixCommand
     @ApiOperation("通过id获取学生信息")
     public HttpResult getStudentById(@PathVariable Integer stuId) throws IllegalAccessException {
         BaseResultDTO resultDTO = studentService.getStudentById(stuId);
@@ -53,6 +59,7 @@ public class StudentController {
 
     //TODO 工作量问题
     @PostMapping("/student/{user_id}")
+    @HystrixCommand
     @ApiOperation("学生信息补充登记")
     public HttpResult addStudent(@PathVariable String user_id, @RequestBody StudentVo student) throws Exception {
         BaseResultDTO resultDTO = studentService.addStudent(Long.valueOf(user_id), student);
@@ -64,6 +71,7 @@ public class StudentController {
     }
 
     @PostMapping("/student/{org_id}/manual")
+    //@HystrixCommand(fallbackMethod = "error")
     @ApiOperation("手动录入学生信息")
     public HttpResult addStudentManual(@PathVariable String org_id, @RequestBody ManualStudentDTO studentDTO) {
         long id = orgStuService.addStudentManual(Long.valueOf(org_id), studentDTO);
@@ -72,6 +80,9 @@ public class StudentController {
             object.put("userId", id);
             return HttpResult.ok("添加成功", object);
         } else return HttpResult.error("添加失败");
+    }
+    public HttpResult error(@PathVariable String org_id, @RequestBody ManualStudentDTO studentDTO){
+        return HttpResult.error("请稍后再试");
     }
 
 
@@ -98,6 +109,7 @@ public class StudentController {
     }
 
     @GetMapping("/student/organizations/{user_id}")
+    @HystrixCommand
     @ApiOperation("获取该学生挂靠的全部机构")
     public HttpResult getAllOrgByStu(@PathVariable String user_id) {
         JSONArray allOrg = orgStuService.getAllOrg(Long.valueOf(user_id));
@@ -119,5 +131,7 @@ public class StudentController {
         }
     }
 
-
+    public HttpResult Global_FallbackMethod(){
+        return HttpResult.error(HttpStatus.SC_REQUEST_TIMEOUT,"请求超时，请稍后再试");
+    }
 }

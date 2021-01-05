@@ -3,6 +3,8 @@ package com.oes.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.oes.model.entity.CourseCategory;
 import com.oes.model.dto.BaseResultDTO;
 import com.oes.model.entity.Courses;
@@ -16,6 +18,7 @@ import com.oes.model.query.CourseQuery;
 import com.oes.model.vo.CourseVo;
 
 import com.oes.util.http.HttpResult;
+import com.oes.util.http.HttpStatus;
 import io.lettuce.core.dynamic.annotation.Param;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -38,6 +41,7 @@ import java.util.Objects;
  */
 
 @RestController
+@DefaultProperties(defaultFallback = "Global_FallbackMethod")
 @Api(tags = {"课程信息"})
 public class CoursesController {
     @Resource
@@ -46,6 +50,7 @@ public class CoursesController {
     private CourseCategoryService courseCategoryService;
 
     @PostMapping("/course/organization/{orgId}")
+    @HystrixCommand
     @ApiOperation(value = "关键字模糊查询课程信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "query", value = "模糊查询参数", required = true, dataType = "CourseQuery"),
@@ -119,6 +124,7 @@ public class CoursesController {
 
 
     @PostMapping("/course/getQueryCourse")
+    @HystrixCommand
     @ApiOperation(value = "根据条件查询课程")
     public HttpResult getQueryCourse(@RequestBody CoursePageQuery courseQuery) throws ParseException {
         BaseResultDTO queryCourse = coursesService.getQueryCourse(courseQuery);
@@ -139,6 +145,7 @@ public class CoursesController {
 
 
     @GetMapping("/course/{orgId}")
+    @HystrixCommand
     @ApiOperation(value = "获取机构的所有课程")
     @ApiImplicitParam(name = "orgId", value = "机构id", required = true)
     public HttpResult getAllCourse(@PathVariable Integer orgId) {
@@ -173,6 +180,7 @@ public class CoursesController {
     }
 
     @GetMapping("/course/{orgId}/basicInfo")
+    @HystrixCommand
     @ApiOperation(value = "添加课程时的基础信息")
     @ApiImplicitParam(name = "orgId", value = "机构id", required = true)
     public HttpResult getCourseBasicInfo(@PathVariable int orgId) {
@@ -183,6 +191,10 @@ public class CoursesController {
         result.put("teacher", teachers);
         result.put("options", options);
         return HttpResult.ok(result);
+    }
+
+    public HttpResult Global_FallbackMethod(){
+        return HttpResult.error(HttpStatus.SC_REQUEST_TIMEOUT,"请求超时，请稍后再试");
     }
 
 }

@@ -125,5 +125,8 @@
 ## 疑问
 1. 抽离common-api包，是不是每个引用该依赖的模块都会将该依赖加入到自己打包后的项目内
 
-## 问王哥
-1. users.addRole(全部在user表中处理)
+## Hystrix
+- student
+- course
+    - courseController
+    - stuEnrollCourseController

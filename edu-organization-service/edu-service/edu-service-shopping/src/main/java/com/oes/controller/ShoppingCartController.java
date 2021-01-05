@@ -2,10 +2,13 @@ package com.oes.controller;
 
 import com.alibaba.fastjson.JSONObject;
 
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.oes.model.dto.BaseResultDTO;
 import com.oes.service.CourseMerService;
 import com.oes.service.ShoppingCartService;
 import com.oes.util.http.HttpResult;
+import com.oes.util.http.HttpStatus;
 import com.oes.vo.ShoppingCartVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +25,7 @@ import java.util.List;
  * @date 2020/9/1619:45
  */
 @RestController
+@DefaultProperties(defaultFallback = "Global_FallbackMethod")
 @Api(tags = {"购物车"})
 public class ShoppingCartController {
     @Autowired
@@ -118,6 +122,7 @@ public class ShoppingCartController {
     }
 
     @ApiOperation(value = "根据商品id将课程商品加入对应用户的购物车")
+    @HystrixCommand
     @PostMapping("/shoppingCart/{recommenderId}/{userId}/{merId}")
     public HttpResult addMer(@PathVariable Integer recommenderId,
                              @PathVariable Integer userId, @PathVariable Integer merId) {
@@ -129,5 +134,9 @@ public class ShoppingCartController {
         } else {
             return httpResult.error(result.getMessage());
         }
+    }
+
+    public HttpResult Global_FallbackMethod(){
+        return HttpResult.error(HttpStatus.SC_REQUEST_TIMEOUT,"请求超时，请稍后再试");
     }
 }

@@ -36,10 +36,10 @@ import java.util.List;
  */
 @Service
 public class ShoppingCartService {
-    @Autowired
+    @Resource
     private ShoppingCartDao shoppingCartDao;
 
-    @Autowired
+    @Resource
     private OrderListDao orderListDao;
 
     @Autowired
@@ -50,8 +50,7 @@ public class ShoppingCartService {
 
     @Resource
     private RestTemplate restTemplate;
-    @Resource
-    private ShoppingCartService shoppingCartService;
+
 
     @Transactional
     public int insert(Integer userId, Integer merId, Integer recommenderId) {
@@ -204,7 +203,7 @@ public class ShoppingCartService {
             // 如果已选该课程
             return new BaseResultDTO(false,"用户已购买该课程，请勿重复添加购物车");
         } else {
-            if (shoppingCartService.insert(userId, merId, recommenderId) == 1) {
+            if (insert(userId, merId, recommenderId) == 1) {
                 return new BaseResultDTO(true,"已成功将商品加入购物车");
             }
             return new BaseResultDTO(false, "请勿重复操作");

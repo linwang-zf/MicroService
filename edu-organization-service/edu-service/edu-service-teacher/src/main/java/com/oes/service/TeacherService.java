@@ -89,7 +89,7 @@ public class TeacherService {
             JSONObject object = new JSONObject();
             object.put("userId",userid);
             object.put("roleName","teacher");
-            b = restTemplate.postForObject(Url.SERVICE_USERCENTER,object,boolean.class);
+            b = restTemplate.postForObject(Url.SERVICE_USERCENTER+"/user/api/roleName",object,boolean.class);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

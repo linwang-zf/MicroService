@@ -58,6 +58,13 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.10</version>
         </dependency>
+        <!--hystrix-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <!--            <version>2.2.1.RELEASE</version>-->
+        </dependency>
+
     </dependencies>
 
 </project>

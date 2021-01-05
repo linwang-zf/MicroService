@@ -38,8 +38,6 @@ spring:
           uri: lb://edu-service-student
           predicates:
             - Path=/student/**
-
-
         - id: edu-shopping #商品模8009
           uri: lb://edu-service-shopping
           predicates:

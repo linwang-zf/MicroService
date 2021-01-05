@@ -1,12 +1,15 @@
 package com.oes.controller;
 
 
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.oes.dto.EnrollCoursesDTO;
 import com.oes.model.enums.EnrollCourseStatus;
 import com.oes.model.vo.CourseVo;
 import com.oes.service.CoursesService;
 import com.oes.service.StuEnrollCourseService;
 import com.oes.util.http.HttpResult;
+import com.oes.util.http.HttpStatus;
 import com.oes.vo.EnrollCoursesVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +25,7 @@ import java.util.Objects;
  * @description :
  */
 @Api(tags = {"学生选修课程"})
+@DefaultProperties(defaultFallback = "Global_FallbackMethod")
 @RestController
 public class StuEnrollCourseController {
 
@@ -78,6 +82,7 @@ public class StuEnrollCourseController {
     }
 
     @GetMapping("/student/{orgId}/{userId}/course/option")
+    @HystrixCommand
     @ApiOperation("获取已经开始且该学生尚未选修过的所有课程")
     public HttpResult getCourseOptionByStuId(@PathVariable Integer orgId, @PathVariable Integer userId) {
         List<CourseVo> courses = coursesService.getCourseOptionByStuId(orgId, userId);
@@ -93,6 +98,10 @@ public class StuEnrollCourseController {
     @GetMapping("/student/api/apply")
     public boolean isApplied(@PathVariable  Integer userId, @PathVariable Integer courseId){
         return stuEnrollCourseService.isApplied(userId, courseId);
+    }
+
+    public HttpResult Global_FallbackMethod(){
+        return HttpResult.error(HttpStatus.SC_REQUEST_TIMEOUT,"请求超时，请稍后再试");
     }
 
 }

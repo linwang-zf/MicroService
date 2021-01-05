@@ -1,6 +1,7 @@
 package com.oes.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.oes.model.dto.BaseResultDTO;
 
 import com.oes.model.entity.User;
@@ -106,7 +107,9 @@ public class UserController {
     }
 
     @PostMapping("/user/api/roleName")
-    public boolean addRoles(@RequestBody Integer userId, @RequestBody String roleName){
+    public boolean addRoles(@RequestBody JSONObject object){
+        int userId = (int) object.get("userId");
+        String roleName = object.getString("roleName");
         return userService.addRoles(userId,roleName);
     }
 

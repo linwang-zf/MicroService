@@ -32,7 +32,7 @@ import java.util.Objects;
 @Service
 @Slf4j
 public class StudentService {
-    @Autowired
+    @Resource
     StudentsDao studentsDao;
 
 
@@ -95,7 +95,7 @@ public class StudentService {
 
 
     /** 补充学生信息
-     * TODO 不实现该接口
+     * TODO 不实现该接口 测试----
      * */
     @Transactional
     public BaseResultDTO addStudent(long user_id, StudentVo studentVo) {
@@ -122,8 +122,11 @@ public class StudentService {
             }
         }
         //TODO 添加addRole全部在user服务中实现
-       // boolean student1 = userService.addRole(usersDao.queryById(student.getUserid()), rolesDao.queryByName("student").getRoleid());
-       // if (!student1) throw new ServiceException("修改用户角色出错");
+        JSONObject object = new JSONObject();
+        object.put("userId",student.getUserid());
+        object.put("roleName","student");
+        boolean student1 = restTemplate.postForObject(Url.SERVICE_USERCENTER+"/user/api/roleName",object,Boolean.class);
+        if (!student1) throw new ServiceException("修改用户角色出错");
         return resultDTO;
     }
 
