@@ -2,7 +2,6 @@ package com.oes.controller;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.oes.config.Url;
-import com.oes.constant.consist.VerifyCodeConstants;
 import com.oes.model.dto.BaseResultDTO;
 import com.oes.model.entity.User;
 import com.oes.model.query.FindPwdQuery;
@@ -14,7 +13,6 @@ import com.oes.util.jwt.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 

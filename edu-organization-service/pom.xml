@@ -14,7 +14,10 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>edu-api-commons</module>
+<<<<<<< HEAD
+=======
         <!-- <module>oes-service-sso</module>-->
+>>>>>>> 94870f2dcc64e24f429a7a2d8fd0f06a3d4b71be
         <module>edu-service</module>
 
 
