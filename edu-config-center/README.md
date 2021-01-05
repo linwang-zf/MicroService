@@ -1,0 +1,2 @@
+- 访问规则
+    - `/{label}/{application}-{profile}.yml` label 为master分支和其他分支 
