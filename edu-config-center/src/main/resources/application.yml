@@ -1,0 +1,12 @@
+server:
+  port: 3344
+
+spring:
+  application:
+    name: ecu-config-center
+  cloud:
+    server:
+      git:
+        uri: http://192.168.4.251/wangxingxing/edu-service.git # github上面的git仓库名字
+        search-paths:
+          - springcloud-config

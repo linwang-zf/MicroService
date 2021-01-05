@@ -192,7 +192,6 @@ public class CoursesController {
         result.put("options", options);
         return HttpResult.ok(result);
     }
-
     public HttpResult Global_FallbackMethod(){
         return HttpResult.error(HttpStatus.SC_REQUEST_TIMEOUT,"请求超时，请稍后再试");
     }
