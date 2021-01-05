@@ -11,12 +11,28 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: edu-gateway  #payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名
-          uri: lb://edu-service-usercenter         #匹配后提供服务的路由地址
+        #        - id: edu-gateway  #payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名
+        #          uri: lb://edu-service-usercenter         #匹配后提供服务的路由地址
+        #          predicates:
+        #            - Path=/user/**          #断言，路径相匹配的进行路由
+        - id: edu-authentication
+          uri: lb://edu-authentication  # 后端服务名
+          predicates:
+            - Path=/loginUser
+
+        - id: edu-service-usercenter
+          uri: lb://edu-service-usercenter
           predicates:
             - Path=/user/**          #断言，路径相匹配的进行路由
+          filters:
+            - JwtCheck
 
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 eureka:
   instance:
@@ -29,3 +45,4 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:7001/eureka
 #      defaultZone: http://eureka7001.com:7001/eureka, http://eureka7002.com:7002/eureka #集群版
+
