@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.oes.config.Url;
 import com.oes.dao.OrderListDao;
 import com.oes.entity.OrderList;
-import com.oes.model.query.user.PaymentQuery;
-import com.oes.model.vo.user.UserVo;
+import com.oes.query.DiscountQuery;
 import com.oes.query.OrderListQuery;
+import com.oes.query.PaymentQuery;
 import com.oes.util.http.HttpResult;
 import com.oes.util.page.PageUtils;
 import com.oes.vo.OrderItemVO;
@@ -32,10 +32,10 @@ import java.util.*;
  */
 @Service
 public class OrderListService {
-    @Autowired
+    @Resource
     private OrderListDao orderListDao;
 
-    @Autowired
+    @Resource
     private CourseMerService courseMerService;
 
     @Autowired
@@ -174,6 +174,15 @@ public class OrderListService {
                     return false;
                 }
             }
+            return true;
+        }
+        return false;
+    }
+
+    @Transactional
+    public boolean setDiscount(DiscountQuery discountQuery) { // 设置折扣
+        if (orderListDao.setDiscount(discountQuery.getOrderId(), discountQuery.getMerId(),
+                discountQuery.getOperator(), discountQuery.getDiscount()) > 0) {
             return true;
         }
         return false;

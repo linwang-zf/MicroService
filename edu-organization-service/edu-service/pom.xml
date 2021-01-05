@@ -15,11 +15,12 @@
         <module>edu-service-msm</module>
         <module>edu-service-usercenter</module>
         <module>edu-service-course</module>
-        <module>edu-service-bind</module>
         <module>edu-service-organization</module>
         <module>edu-service-student</module>
         <module>edu-service-teacher</module>
         <module>edu-service-shopping</module>
+        <module>edu-service-worker</module>
+        <module>edu-service-payment</module>
     </modules>
 
     <dependencies>

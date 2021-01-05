@@ -267,4 +267,41 @@ public class UserService {
         }
         return usersDao.update(user) == 1;
     }
+
+    public boolean addRole(Integer userId, int roleId) {
+        User user = usersDao.queryById(userId);
+        if (user.getRole1() == roleId || user.getRole2() == roleId || user.getRole3() == roleId) return true;
+        if (user.getDefaultRole() == 0 || user.getDefaultRole() == 1) {
+            user.setDefaultRole(roleId);
+        } else if (user.getRole1() == 0 || user.getRole1() == 1) {
+            user.setRole1(roleId);
+        } else if (user.getRole2() == 0 || user.getRole2() == 1) {
+            user.setRole2(roleId);
+        } else if (user.getRole3() == 0 || user.getRole3() == 1) {
+            user.setRole3(roleId);
+        }
+        return usersDao.update(user) == 1;
+    }
+
+    public HttpResult removeRole(  Integer userId, String roleName) {
+        int roleId = rolesDao.queryByName(roleName).getRoleid();
+        User user = usersDao.queryById(userId);
+        if (user.getDefaultRole() == roleId) {
+            user.setDefaultRole(0);
+        } else if (user.getRole1() == roleId) {
+            user.setRole1(1);
+        } else if (user.getRole2() == roleId) {
+            user.setRole2(1);
+        } else if (user.getRole3() == roleId) {
+            user.setRole3(1);
+        }
+        JSONObject object = new JSONObject();
+        object.put("isRemove",usersDao.update(user) == 1);
+        object.put("roleId",roleId);
+        if(usersDao.update(user) == 1){
+            return HttpResult.ok("成功",object);
+        }else {
+            return HttpResult.error("失败");
+        }
+    }
 }

@@ -5,6 +5,7 @@ import com.oes.query.OrderListQuery;
 import com.oes.service.OrderListService;
 import com.oes.util.http.HttpResult;
 import com.oes.vo.OrderItemVO;
+import com.oes.vo.OrderListVO;
 import com.oes.vo.OrderListVOS;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,5 +59,12 @@ public class OrderListController {
             return httpResult.ok("成功取消订单");
         }
         return httpResult.error("订单不存在或已被取消");
+    }
+
+
+    /***************************对外API接口*********/
+    @GetMapping("/order/api/{orderId}")
+    public OrderListVO getOrderList(Integer orderId){
+        return orderListService.getOrderListVO(orderId);
     }
 }
