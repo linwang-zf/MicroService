@@ -5,8 +5,17 @@ spring:
   application:
     name: ecu-config-center
   cloud:
-    server:
-      git:
-        uri: http://192.168.4.251/wangxingxing/edu-service.git # github上面的git仓库名字
-        search-paths:
-          - springcloud-config
+    config:
+      server:
+        git:
+          uri: http://192.168.4.251/wangxingxing/springcloud-config.git # github上面的git仓库名字
+          search-paths:
+            - springcloud-config # 搜索目录
+          username: wangxingxing
+          password: 12345678
+      label: master #读取分支
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.130:7001/eureka
