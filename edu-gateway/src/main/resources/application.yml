@@ -20,6 +20,12 @@ spring:
           filters:
             - StripPrefix=1
 
+            # 服务降级  触发调用 HystrixFallbackHandler GatewayFallbackConfig
+            - name: Hystrix
+              args:
+                name: default
+                fallbackUri: 'forward:/defaultfallback'
+
         - id: test1
           uri: lb://edu-authentication
           predicates:
@@ -38,15 +44,6 @@ spring:
             - Path=/user/**          #断言，路径相匹配的进行路由
           filters:
             - JwtCheck
-#        - id: edu-usercenter  #用户登陆   #路由的ID，没有固定规则但要求唯一，简易配合服务名
-#          uri: lb://edu-service-usercenter         #匹配后提供服务的路由地址
-#          predicates:
-#            - Path=/user/login          #断言，路径相匹配的进行路由
-#        - id: edu-usercenter  #用户模块    #路由的ID，没有固定规则但要求唯一，简易配合服务名
-#          uri: lb://edu-service-usercenter         #匹配后提供服务的路由地址
-#          predicates:
-#            - Path=/user/login          #断言，路径相匹配的进行路由
-#            #- Cookies=Authorization,
 
         - id: edu-course #课程模块8003
           uri: lb://edu-service-course
@@ -126,11 +123,10 @@ eureka:
     # 是否从EurekaServer抓取已有的注册信息，默认为true.单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
     feth-registry: true
     serviceUrl:
-      defaultZone: http://192.168.3.130:7001/eureka
+      defaultZone: http://192.168.4.123:7001/eureka
 #      defaultZone: http://eureka7001.com:7001/eureka, http://eureka7002.com:7002/eureka #集群版
 
 secure:
   ignore:
     urls: #配置白名单路径
-      - "/actuator/**"
       - "/auth/oauth/token"

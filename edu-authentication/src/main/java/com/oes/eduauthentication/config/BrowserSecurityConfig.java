@@ -1,5 +1,6 @@
 package com.oes.eduauthentication.config;
 
+import com.oes.eduauthentication.service.CustomPasswordEncoder;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+
+
 
    /* @Resource
     private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
@@ -91,11 +94,11 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
+/*
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        return new CustomPasswordEncoder();
+    }*/
 
 
 }

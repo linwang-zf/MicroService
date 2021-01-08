@@ -13,8 +13,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 public class UserDTO {
-    private Long id;
-    private String username;
+    private Long userid;
+    private String account;
     private String password;
     private Integer status;
     private List<String> roles;

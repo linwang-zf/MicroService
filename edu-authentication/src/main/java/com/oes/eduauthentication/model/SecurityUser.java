@@ -18,11 +18,11 @@ public class SecurityUser implements UserDetails {
     /**
      * ID
      */
-    private Long id;
+    private Long userid;
     /**
      * 用户名
      */
-    private String username;
+    private String account;
     /**
      * 用户密码
      */
@@ -41,8 +41,8 @@ public class SecurityUser implements UserDetails {
     }
 
     public SecurityUser(UserDTO userDTO) {
-        this.setId(userDTO.getId());
-        this.setUsername(userDTO.getUsername());
+        this.setUserid(userDTO.getUserid());
+        this.setAccount(userDTO.getAccount());
         this.setPassword(userDTO.getPassword());
         this.setEnabled(userDTO.getStatus() == 1);
         if (userDTO.getRoles() != null) {
@@ -63,7 +63,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.account;
     }
 
     @Override

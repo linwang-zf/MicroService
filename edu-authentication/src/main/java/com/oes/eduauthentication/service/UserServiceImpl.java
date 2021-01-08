@@ -2,13 +2,16 @@ package com.oes.eduauthentication.service;
 
 import cn.hutool.core.collection.CollUtil;
 import com.oes.eduauthentication.constant.MessageConstant;
+import com.oes.eduauthentication.dao.RolesDao;
+import com.oes.eduauthentication.dao.UsersDao;
+import com.oes.eduauthentication.entity.Role;
+import com.oes.eduauthentication.entity.User;
 import com.oes.eduauthentication.model.SecurityUser;
 import com.oes.eduauthentication.model.UserDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AccountExpiredException;
-import org.springframework.security.authentication.CredentialsExpiredException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
+import org.springframework.security.authentication.*;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,8 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -25,37 +31,58 @@ import java.util.stream.Collectors;
  * Created by macro on 2020/6/19.
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserDetailsService {
 
-    private List<UserDTO> userList;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @PostConstruct
-    public void initData() {
-        String password = passwordEncoder.encode("123456");
-        userList = new ArrayList<>();
-        userList.add(new UserDTO(1L,"macro", password,1, CollUtil.toList("ADMIN")));
-        userList.add(new UserDTO(2L,"andy", password,1, CollUtil.toList("TEST")));
-    }
+    @Resource
+    private UsersDao usersDao;
+    @Resource
+    private RolesDao rolesDao;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<UserDTO> findUserList = userList.stream().filter(item -> item.getUsername().equals(username)).collect(Collectors.toList());
-        if (CollUtil.isEmpty(findUserList)) {
-            throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
+        log.info("登录用户名：" + username);
+        User accountUser = usersDao.queryByAccount(username);
+        if(accountUser == null) {
+            throw new InternalAuthenticationServiceException("用户名或密码错误!");
         }
-        SecurityUser securityUser = new SecurityUser(findUserList.get(0));
-        if (!securityUser.isEnabled()) {
-            throw new DisabledException(MessageConstant.ACCOUNT_DISABLED);
-        } else if (!securityUser.isAccountNonLocked()) {
-            throw new LockedException(MessageConstant.ACCOUNT_LOCKED);
-        } else if (!securityUser.isAccountNonExpired()) {
-            throw new AccountExpiredException(MessageConstant.ACCOUNT_EXPIRED);
-        } else if (!securityUser.isCredentialsNonExpired()) {
-            throw new CredentialsExpiredException(MessageConstant.CREDENTIALS_EXPIRED);
+        // 用dao根据用户名从数据库查出用户信息
+        // User类实现了UserDetails接口 可以根据需求定制自己的UserDetails实现类返回
+        // 密码校验逻辑 告诉security从数据库读出的密码是多少
+        // principal里的就是UserDetails返回的内容
+        return getUserDetails(accountUser);
+    }
+
+    public UserDetails loadUserByPhone(String phone) throws UsernameNotFoundException {
+        log.info("登录手机号：" + phone);
+        User phoneUser = usersDao.queryByPhone(phone);
+        return getUserDetails(phoneUser);
+    }
+
+    private UserDetails getUserDetails(User user) {
+        int defaultRole = user.getDefaultRole();
+        int role1 = user.getRole1();
+        int role2 = user.getRole2();
+        int role3 = user.getRole3();
+        Set<Integer> roleIds = new HashSet<>();
+        if (defaultRole != 0) roleIds.add(defaultRole);
+        if (role1 != 0) roleIds.add(role1);
+        if (role2 != 0) roleIds.add(role2);
+        if (role3 != 0) roleIds.add(role3);
+        List<Role> roles = rolesDao.selectBatch(roleIds);
+        if(roles != null) {
+            log.info("roles非空");
+            log.info(roles.toString());
         }
-        return securityUser;
+        StringBuilder authorityString = new StringBuilder();
+        for (Role role : roles) {
+            authorityString.append(role.getRoleName().toUpperCase()).append(",");
+            log.info(role.getRoleName());
+        }
+        authorityString.deleteCharAt(authorityString.length()-1);
+        log.info(authorityString.toString());
+        log.info("id: {}, account: {} 用户已登录...", user.getUserid(), user.getAccount());
+        return new CustomUserDetails((int) user.getUserid(), 0, user.getAccount(), user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(authorityString.toString()));
     }
 
 }
