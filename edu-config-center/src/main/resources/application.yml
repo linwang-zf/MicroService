@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: ecu-config-center
+    name: edu-config-center
   cloud:
     config:
       server:
@@ -18,4 +18,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.4.25:7001/eureka
+      defaultZone: http://172.20.0.10:7001/eureka
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} #实例名
+    prefer-ip-address: true  #是否使用IP地址注册

@@ -5,7 +5,7 @@ spring:
       label: master #分支名称
       name: config #配置文件名称
       profile: dev #读取后缀名称  上面三个综合：master分支上config-dev.yml的配置文件被读取（http:xxx.com/master/config-dev.yml）
-      uri: http://172.20.0.:3344 #配置中心地址http://172.20.0.11:3344/master/config-dev.yml
+      uri: http://172.20.0.11:3344 #配置中心地址http://172.20.0.11:3344/master/config-dev.yml
 
 
 #暴露监控端点

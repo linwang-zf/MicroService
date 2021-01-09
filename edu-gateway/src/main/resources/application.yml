@@ -99,14 +99,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: 'http://localhost:9401/rsa/publicKey' #配置RSA的公钥访问地址
-
-  redis:
-    database: 0
-    port: 8085
-    host: 139.129.101.91
-    password: Xkj_13011301
-    timeout: 2000
+          jwk-set-uri: 'http://172.20.0.12:9401/rsa/publicKey' #配置RSA的公钥访问地址
 
 management:
   endpoints:
@@ -116,15 +109,8 @@ management:
 
 eureka:
   instance:
-    hostname: edu-gateway
-  client:
-    #表示是否将自己注册进EurekaServer 默认为true
-    register-with-eureka: true
-    # 是否从EurekaServer抓取已有的注册信息，默认为true.单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
-    feth-registry: true
-    serviceUrl:
-      defaultZone: http://192.168.4.123:7001/eureka
-#      defaultZone: http://eureka7001.com:7001/eureka, http://eureka7002.com:7002/eureka #集群版
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} #实例名
+    prefer-ip-address: true  #是否使用IP地址注册
 
 secure:
   ignore:
