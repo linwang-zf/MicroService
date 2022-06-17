@@ -22,7 +22,7 @@
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
         <swagger.version>2.9.2</swagger.version>
         <druid.version>1.1.23</druid.version>
-        <fastjson.version>1.2.62</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <jwt.version>0.9.1</jwt.version>
     </properties>
 
